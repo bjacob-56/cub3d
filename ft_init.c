@@ -62,11 +62,33 @@ t_session	init_session(void)
 	return (session);
 }
 
-t_window	init_window(t_session t_ses) // arguments a ajouter
+t_window	init_window(t_session t_ses, char *map_file_path) // arguments a ajouter ?
 {
 	t_window	t_win;
+	int		fd;
+	int		nb_read;
+	int		res_x;
+	int		res_y;
 
-	t_win = open_window(t_ses.id, 1920, 1080, "Fenetre_1");
+	int		res_get_map;
+
+	fd = open(map_file_path, O_RDONLY);
+	if (fd < 0)
+		return (fd);
+	nb_read = set_data_map_info(fd, &t_win.map_info);
+	if (nb_read == -1)
+	{
+		free_map_info_data(&t_win.map_info);
+		return (NULL); // 							reponse a gerer
+	}
+	res_x = t_win.map_info.resolution_x;
+	res_y = t_win.map_info.resolution_y;
+
+	res_get_map = parse_map(&t_win, map_file_path, fd, nb_read);
+
+
+	t_win = open_window(t_ses.id, res_x, res_y, "Fenetre_1");
+
 	t_win.map = init_map(5, 5);
 	t_win.map[3][3] = 1;
 	return (t_win);
