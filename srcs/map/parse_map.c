@@ -50,8 +50,8 @@ int		check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j)
 			return (-1);
 		}
 		t_win->map_info.start.direction = line[j];
-		t_win->map_info.start.line = i;
-		t_win->map_info.start.column = j;
+		t_win->map_info.start.line = j;
+		t_win->map_info.start.column = i;
 		t_win->map[i][j] = 0;
 	}
 	else if (line[j] == ' ')

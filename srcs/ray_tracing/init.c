@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 12:42:47 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/08 16:52:51 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ t_player	init_player(t_window t_win)
 		player.dir_y = FOV * -1;
 	player.plane_x = player.dir_y;
 	player.plane_y = -1 * player.dir_x;
-	player.pos_x = t_win.map_info.start.column;
-	player.pos_y = t_win.map_info.start.line;
+	player.pos_x = t_win.map_info.start.column + 0.5;
+	player.pos_y = t_win.map_info.start.line + 0.5;
 //	player.pos_x = 1.5;
 //	player.pos_y = 1.5;
 	player.p_square_x = floor(player.pos_x);

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 15:23:35 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/08 16:33:37 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@
 # define RIGHT 124
 # define ESC 53
 
-# define THETA 0.5
+# define THETA 0.1
+# define ONE_STEP 0.3
 
 typedef struct	s_image
 {
