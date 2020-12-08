@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 13:55:58 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/08 15:06:39 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ void	ft_display_image(t_session t_ses, t_window t_win, t_player player)
 	mlx_put_image_to_window (t_ses.id, t_win.window, t_img.image, 0, 0);
 }
 
+
 int		main()
 {
+	t_game		game;
 	t_session	t_ses;
 	t_window	t_win;
 	t_image		t_img;
 	t_player	player;
+	void		*param;
 
 //	double		time;
 //	double		oldTime;
@@ -73,9 +76,13 @@ t_win.y_w = t_win.map_info.resolution_y;
 
 	ft_display_image(t_ses, t_win, player);
 
-	free(t_win.map);
-	
-	while (mlx_loop(t_ses.id));
+//	free(t_win.map);
+	game.session = t_ses;
+	game.window = t_win;
+	game.player = player;
+
+	mlx_hook(t_win.window, 2, 0, &ft_key, &game);
+	mlx_loop(t_ses.id);
 
 	//	mlx_clear_win_ptr(mlx_ptr, win_ptr);
 

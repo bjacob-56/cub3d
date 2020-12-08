@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 14:12:35 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/08 15:23:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@
 # define LINE_HEIGHT_STD 800 // a ajuster ?
 
 # define FOV 0.66
+# define W 13
+# define A 0
+# define S 1
+# define D 2
+# define UP 126
+# define DOWN 125
+# define LEFT 123
+# define RIGHT 124
+# define ESC 53
+
+# define THETA 0.5
 
 typedef struct	s_image
 {
@@ -124,9 +135,19 @@ typedef struct	s_pixel_info
 	int	line_height;
 }				t_pixel_info;
 
+typedef struct s_game
+{
+	t_session	session;
+	t_window	window;
+	t_player	player;
+}				t_game;
+
+
 /*
 ** ft_cub3d.c
 */
+void	ft_display_image(t_session t_ses, t_window t_win, t_player player);
+
 
 /*
 ** ft_init.c
@@ -196,6 +217,15 @@ void	ft_put_ceiling_to_image(t_window t_win,
 		t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
 void	ft_put_floor_to_image(t_window t_win,
 		t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
+
+/*
+** move.c
+*/
+int		ft_key(int key, t_game *game);
+
+
+
+
 
 /*
 ** ft_maths.c
