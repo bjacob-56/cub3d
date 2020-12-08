@@ -8,6 +8,7 @@ void	init_map_info(t_map_info *map_info)
 	map_info->path_we = NULL;
 	map_info->path_sprite = NULL;
 	map_info->start.line = -1;
+	map_info->is_valid = 1;
 }
 
 int		free_map_info_data(t_map_info *map_info)

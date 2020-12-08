@@ -17,7 +17,15 @@ int		**ft_malloc_tab_2d(t_window t_win)
 	return (map);
 }
 
-int		check_cell_i_j(t_window *t_win, char *line, int i, int j)
+/*
+** c = N/S/E/W --> 0
+** c = 0 --> 0
+** c = 1 --> 1
+** c = 2 --> 2
+** c = ' ' --> -1
+*/
+
+int		check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j)
 {
 	if (line[j] >= '0' && line[j] <= '2')
 		t_win->map[i][j] = line[j] - '0';
@@ -25,7 +33,10 @@ int		check_cell_i_j(t_window *t_win, char *line, int i, int j)
 		line[j] == 'E' || line[j] == 'W')
 	{
 		if (t_win->map_info.start.line != -1)
+		{
+			t_win->map_info.is_valid = -1;
 			return (-1);
+		}
 		t_win->map_info.start.direction = line[j];
 		t_win->map_info.start.line = i;
 		t_win->map_info.start.column = j;
@@ -54,7 +65,7 @@ int		fill_tab_map(t_window *t_win, int fd)
 		len_line = ft_strlen(line);
 		j = -1;
 		while (++j < len_line)
-			if (check_cell_i_j(t_win, line, i, j) == -1)
+			if (check_and_fill_cell_i_j(t_win, line, i, j) == -1)
 				return (-1);
 		while (j < t_win->map_info.nb_columns)
 			t_win->map[i][j++] = -1;

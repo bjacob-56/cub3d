@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/07 18:50:58 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/08 09:47:51 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 # define LINE_HEIGHT_STD 800 // a ajuster ?
 
+# define FOV 0.66
+
 typedef struct	s_image
 {
 	void	*image;
@@ -41,6 +43,7 @@ typedef struct	s_img_poles
 	t_image	so;
 	t_image	ea;
 	t_image	we;
+	t_image	sprite;
 }				t_img_poles;
 
 typedef struct	s_start
@@ -64,6 +67,7 @@ typedef struct	s_map_info
 	int		nb_lines;
 	int		nb_columns;
 	t_start	start;
+	int		is_valid;
 }				t_map_info;
 
 typedef struct	s_session
@@ -154,12 +158,19 @@ int			**free_all_lines_and_map(int ***tab, int i_tab);
 ** ft_parse_map.c
 */
 int			**ft_malloc_tab_2d(t_window t_win);
-int			check_cell_i_j(t_window *t_win, char *line, int i, int j);
+int			check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j);
 int			fill_tab_map(t_window *t_win, int fd);
 int			get_nb_lines_and_columns(t_window *t_win, int fd,
 			int size, char **line);
 int			parse_map(t_window *t_win, char *map_file_path,
 			int fd, int nb_read);
+
+/*
+** ft_check_map.c
+*/
+int			**copy_map_to_map_bis(t_window t_win);
+void		check_next_point(t_window *t_win, int **map_bis, int i, int j);
+int			check_map_with_propagation(t_window t_win);
 
 /*
 ** ft_draw.c

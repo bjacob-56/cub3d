@@ -3,25 +3,34 @@
 /*
 
 next steps :
-	- algorithme de propagation pour valider la map
 	- amelioration du ray casting -> stockage des lignes verticales dans une image (ajout floor et ceiling)
 	- lien entre map parsée et affichage d'une image
 	- ajout de la mobilité
 */
 
+/*
+
+mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*funct_ptr)(), void *param)
+funct_ptr --> ft_keys
+param --> winndow ou player
+
+mlx_hook(s.win.ptr, 2, 0, ft_key, &s);
+
+int		ft_key(int key, void *arg) --> arg = param de mlx_hook ?
 
 
-void	print_map(t_window t_win)
+*/
+
+
+void	print_map(t_window t_win, int **map)
 {
 	int	nb_lines;
 	int	nb_columns;
-	int	**map;
 	int	i;
 	int	j;
 
 	nb_lines = t_win.map_info.nb_lines;
 	nb_columns = t_win.map_info.nb_columns;
-	map = t_win.map;
 	i = 0;
 	while (i < nb_lines)
 	{
@@ -59,6 +68,9 @@ void	print_map_info(t_map_info map_info)
 }
 
 
+
+
+
 int main()
 {
 	char *map_file_path = "./map/map.cub";
@@ -66,6 +78,7 @@ int main()
 	int		fd;
 	int		nb_read;
 	int		res_get_map;
+	int		check_map;
 
 	fd = open(map_file_path, O_RDONLY);
 	if (fd < 0)
@@ -74,11 +87,15 @@ int main()
 	if (nb_read == -1)
 		return (free_map_info_data(&t_win.map_info));
 	res_get_map = parse_map(&t_win, map_file_path, fd, nb_read);
-	
-	printf("nb_read = %d\n\n", nb_read);
-	print_map_info(t_win.map_info);
-	printf("get_map = %d\n", res_get_map);
-	printf("nb_lines = %d, nb_columns = %d\n", t_win.map_info.nb_lines, t_win.map_info.nb_columns);
-	print_map(t_win);
+
+	check_map = check_map_with_propagation(t_win);
+
+	printf("\ncheck_map = %d\n", check_map);
+//	printf("nb_read = %d\n\n", nb_read);
+//	print_map_info(t_win.map_info);
+	printf("\n");
+//	printf("get_map = %d\n", res_get_map);
+//	printf("nb_lines = %d, nb_columns = %d\n", t_win.map_info.nb_lines, t_win.map_info.nb_columns);
+	print_map(t_win, t_win.map);
 	close(fd);
 }

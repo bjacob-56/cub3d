@@ -1,55 +1,5 @@
 #include "ft_cub3d.h"
 
-// ------------------------------------
-
-int	**init_map(int x, int y)
-{
-	int **map;
-	int i;
-	int j;
-
-	i = 0;
-	map = malloc (sizeof(int*) * y);
-	while(i < y)
-		map[i++] = malloc(sizeof(int) * x);
-
-	i = 0;
-	j = 0;
-	while (i < y)
-	{
-		j = 0;
-		while (j < x)
-			map[i][j++] = 1;
-		i++;
-	}
-	i = 1;
-	j = 1;
-		while (i < y - 1)
-	{
-		j = 1;
-		while (j < x - 1)
-			map[i][j++] = 0;
-		i++;
-	}
-
-	map[2][2] = 1;
-
-	i = 0;
-	j = 0;
-	while (i < 5)
-	{
-		j = -1;
-		while (++j < 5)
-			printf("%d", map[i][j]);
-		printf("\n");
-		i++;
-	}
-
-	return (map);
-}
-// ------------------------------------
-
-
 t_session	init_session(void)
 {
 	t_session	session;
@@ -59,18 +9,17 @@ t_session	init_session(void)
 	session.images.so = open_image(session.id, "./images/mur_S.xpm", 0, 0);
 	session.images.ea = open_image(session.id, "./images/mur_E.xpm", 0, 0);
 	session.images.we = open_image(session.id, "./images/mur_W.xpm", 0, 0);
+	session.images.sprite = open_image(session.id, "./images/mur_W.xpm", 0, 0); // A CHANGER
 	return (session);
 }
 
-t_window	init_window(t_session t_ses, char *map_file_path) // arguments a ajouter ?
+t_window	init_window(t_session t_ses, char *map_file_path, char *title)
 {
 	t_window	t_win;
-	int		fd;
-	int		nb_read;
-	int		res_x;
-	int		res_y;
-
-	int		res_get_map;
+	int			fd;
+	int			nb_read;
+	int			res_x;
+	int			res_y;
 
 	fd = open(map_file_path, O_RDONLY);
 	if (fd < 0)
@@ -84,32 +33,39 @@ t_window	init_window(t_session t_ses, char *map_file_path) // arguments a ajoute
 	res_x = t_win.map_info.resolution_x;
 	res_y = t_win.map_info.resolution_y;
 
-	res_get_map = parse_map(&t_win, map_file_path, fd, nb_read);
+	if (parse_map(&t_win, map_file_path, fd, nb_read) == -1 ||
+		check_map_with_propagation(t_win) == -1)
+		return (NULL);
 
+	t_win = open_window(t_ses.id, res_x, res_y, title); // a mettre ailleurs
 
-	t_win = open_window(t_ses.id, res_x, res_y, "Fenetre_1");
-
-	t_win.map = init_map(5, 5);
-	t_win.map[3][3] = 1;
 	return (t_win);
 }
 
-t_player	init_player(void) // arguments a ajouter
+t_player	init_player(t_window t_win)
 {
 	t_player	player;
 
-	player.dir_x = 0.5;
-	player.dir_y = 0.5;
-
+	if (t_win.map_info.start.direction == 'N')
+		player.dir_x = 0;
+		player.dir_y = FOV * -1;
+	if (t_win.map_info.start.direction == 'S')
+		player.dir_x = 0;
+		player.dir_y = FOV * 1;
+	if (t_win.map_info.start.direction == 'E')
+		player.dir_x = FOV * 1;
+		player.dir_y = 0;
+	if (t_win.map_info.start.direction == 'W')
+		player.dir_x = FOV * -1;
+		player.dir_y = 0;
 	player.plane_x = player.dir_y;
 	player.plane_y = -1 * player.dir_x;
-
-	player.pos_x = 1.5;
-	player.pos_y = 1.5;
-
+	player.pos_x = t_win.map_info.start.column;
+	player.pos_y = t_win.map_info.start.line;
+//	player.pos_x = 1.5;
+//	player.pos_y = 1.5;
 	player.p_square_x = floor(player.pos_x);
 	player.p_square_y = floor(player.pos_y);
-
 	return (player);
 }
 
