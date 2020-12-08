@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 16:33:37 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/08 17:45:55 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 
 # define THETA 0.1
 # define ONE_STEP 0.3
+
+# define X_RES_SCREEN 5120
+# define Y_RES_SCREEN 2880
 
 typedef struct	s_image
 {

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 16:52:51 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/08 17:55:46 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ t_window	init_window(t_session t_ses, char *map_file_path, char *title)
 		check_map_with_propagation(&t_win) == -1)
 		return (window_null());
 	t_win.title = title;
-	t_win.window = mlx_new_window(t_ses.id, t_win.map_info.resolution_x,
-								t_win.map_info.resolution_y, t_win.title);
+//	t_win.window = mlx_new_window(t_ses.id, t_win.map_info.resolution_x,
+//								t_win.map_info.resolution_y, t_win.title);
 	return (t_win);
 }
 

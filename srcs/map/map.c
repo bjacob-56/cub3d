@@ -3,21 +3,13 @@
 /*
 
 next steps :
-	- ajout de la mobilité
+	- ajout sprite
+	- gestion fermeture propre (ESC ou clique sur la croix)
+	- gestion minimalize window
+	- fix resolutions qui bug
+	- ajout --save
 */
 
-/*
-
-mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*funct_ptr)(), void *param)
-funct_ptr --> ft_keys
-param --> winndow ou player
-
-mlx_hook(s.win.ptr, 2, 0, ft_key, &s);
-
-int		ft_key(int key, void *arg) --> arg = param de mlx_hook ?
-
-
-*/
 
 
 void	print_map(t_window t_win, int **map)

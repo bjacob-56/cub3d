@@ -65,8 +65,8 @@ int		check_map_with_propagation(t_window *t_win)
 
 	if (!(map_bis = copy_map_to_map_bis(*t_win)))
 		return (-1);
-	i_start = t_win->map_info.start.line;
-	j_start = t_win->map_info.start.column;
+	i_start = t_win->map_info.start.column;
+	j_start = t_win->map_info.start.line;
 	if (t_win->map_info.is_valid == -1)
 		return (-1);
 	check_next_point(t_win, map_bis, i_start, j_start);

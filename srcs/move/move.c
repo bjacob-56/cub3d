@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 14:22:15 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 17:18:25 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/08 17:58:07 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,5 @@ int		ft_key(int key, t_game *game)
 		move_player_side(game, key);
 	if (key == ESC)
 		close_window(game);
-	return (1);
+	return (0);
 }
