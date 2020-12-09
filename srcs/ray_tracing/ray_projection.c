@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:13:25 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/09 11:51:38 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/09 15:00:16 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,39 @@ int		find_closest_wall(t_window t_win, t_player player,
 	return (side);
 }
 
+int		find_closest_sprite(t_window t_win, t_player player,
+		t_vector *p_square, t_ray *ray)
+{
+	int	hit;
+	int	side;
+
+	(*p_square).x = player.p_square_x;
+	(*p_square).y = player.p_square_y;
+	hit = 0;
+	while (!hit) // comment checker le mur le plus proche ?
+	{
+		if ((*ray).side_dist.x <= (*ray).side_dist.y)
+		{
+			(*ray).side_dist.x += (*ray).delta.x;
+			(*p_square).x += (*ray).step.x;
+			side = 0;
+		}
+		else
+		{
+			(*ray).side_dist.y += (*ray).delta.y;
+			(*p_square).y += (*ray).step.y;
+			side = 1;
+		}
+		if (t_win.map[(int)(*p_square).x][(int)(*p_square).y] > 0) // attention a ne pas depasser la limite
+			hit = 1;
+	}
+	return (side);
+}
+
 double	get_dist_wall(t_player player, t_ray ray, t_vector p_square)
 {
 	if (!ray.side)
-		return (p_square.x - player.pos_x + (1 - ray.step.x) / 2) / ray.dir.x; // a voir si suffisant pour texture
+		return ((p_square.x - player.pos_x + (1 - ray.step.x) / 2) / ray.dir.x); // a voir si suffisant pour texture
 	else
-		return (p_square.y - player.pos_y + (1 - ray.step.y) / 2) / ray.dir.y;
+		return ((p_square.y - player.pos_y + (1 - ray.step.y) / 2) / ray.dir.y);
 }

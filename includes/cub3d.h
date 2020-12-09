@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/09 12:36:25 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/09 16:09:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define LINE_HEIGHT_STD 800 // a ajuster ?
 
-# define FOV 0.66
+# define FOV 0.66 // a verifier
 # define W 13
 # define A 0
 # define S 1
@@ -87,8 +87,8 @@ typedef struct	s_map_info
 	int		c_colors[3];
 	int		nb_lines;
 	int		nb_columns;
-	int		nb_sprites;
-	t_sprite	*sprites;
+//	int		nb_sprites;
+//	t_sprite	*sprites;
 	t_start	start;
 	int		is_valid;
 }				t_map_info;
@@ -159,7 +159,7 @@ typedef struct s_game
 ** ft_cub3d.c
 */
 void	ft_display_image(t_session t_ses, t_window t_win, t_player player);
-
+t_image	ft_display_stripes(t_session t_ses, t_window t_win, t_player player, t_image t_img, t_ray ray);
 
 /*
 ** ft_init.c
@@ -221,6 +221,9 @@ int			find_closest_wall(t_window t_win, t_player player,
 			t_vector *p_square, t_ray *ray);
 double		get_dist_wall(t_player player, t_ray ray, t_vector p_square);
 
+int		find_closest_sprite(t_window t_win, t_player player,
+		t_vector *p_square, t_ray *ray);
+
 /*
 ** ft_display_image.c
 */
@@ -234,6 +237,9 @@ void	ft_put_ceiling_to_image(t_window t_win,
 		t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
 void	ft_put_floor_to_image(t_window t_win,
 		t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
+
+t_image	vertical_sprite_line_to_image(t_session t_ses, t_window t_win, t_image t_img_new,
+		t_player player, t_ray ray);
 
 /*
 ** move.c
