@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 17:45:55 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/09 12:36:25 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@
 
 # define X_RES_SCREEN 5120
 # define Y_RES_SCREEN 2880
+
+typedef struct	s_sprite
+{
+	double	x;
+	double	y;
+}				t_sprite;
 
 typedef struct	s_image
 {
@@ -81,6 +87,8 @@ typedef struct	s_map_info
 	int		c_colors[3];
 	int		nb_lines;
 	int		nb_columns;
+	int		nb_sprites;
+	t_sprite	*sprites;
 	t_start	start;
 	int		is_valid;
 }				t_map_info;
@@ -186,10 +194,15 @@ int			**free_all_lines_and_map(int ***tab, int i_tab);
 int			**ft_malloc_tab_2d(t_window t_win);
 int			check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j);
 int			fill_tab_map(t_window *t_win, int fd);
-int			get_nb_lines_and_columns(t_window *t_win, int fd,
+int			get_nb_lines_columns_sprites(t_window *t_win, int fd,
 			int size, char **line);
 int			parse_map(t_window *t_win, char *map_file_path,
 			int fd, int nb_read);
+
+int		check_and_fill_sprite(t_window *t_win, char *line, int i, int j);
+int		fill_tab_sprites(t_window *t_win, int fd, char **line);
+int		fill_sprites(t_window *t_win, char *map_file_path, int fd, int nb_read);
+
 
 /*
 ** ft_check_map.c

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 14:22:15 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 17:58:07 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/09 11:53:25 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		move_player_straight(t_game *game, int key)
 	return (0);
 }
 
-int		move_player_side(t_game *game, int key)
+int		move_player_side(t_game *game, int key) // A CORRIGER
 {
 	double	pos_x;
 	double	pos_y;
@@ -73,8 +73,8 @@ int		move_player_side(t_game *game, int key)
 		signe = -1;
 	pos_x = game->player.pos_x;
 	pos_y = game->player.pos_y;
-	pos_x += signe * ONE_STEP * game->player.dir_y;
-	pos_y += signe * ONE_STEP * game->player.dir_x;
+	pos_x += signe * ONE_STEP * game->player.dir_y; // pas bon
+	pos_y += signe * ONE_STEP * game->player.dir_x; // pas bon
 	p_square_x = floor(pos_x);
 	p_square_y = floor(pos_y);
 	if (game->window.map[(int)p_square_x][(int)p_square_y] == 0 ||

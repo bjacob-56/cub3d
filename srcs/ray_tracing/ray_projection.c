@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:13:25 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 11:20:35 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/09 11:51:38 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		find_closest_wall(t_window t_win, t_player player,
 			(*p_square).y += (*ray).step.y;
 			side = 1;
 		}
-		if (t_win.map[(int)(*p_square).x][(int)(*p_square).y] > 0) // attention a ne pas depasser la limite
+		if (t_win.map[(int)(*p_square).x][(int)(*p_square).y] == 1) // attention a ne pas depasser la limite
 			hit = 1;
 	}
 	return (side);

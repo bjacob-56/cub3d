@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 17:55:46 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/09 12:45:02 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_session	init_session(void)
 	session.images.so = open_image(session.id, "./images/mur_S.xpm", 0, 0);
 	session.images.ea = open_image(session.id, "./images/mur_E.xpm", 0, 0);
 	session.images.we = open_image(session.id, "./images/mur_W.xpm", 0, 0);
-	session.images.sprite = open_image(session.id, "./images/mur_W.xpm", 0, 0); // A CHANGER
+	session.images.sprite = open_image(session.id, "./images/column.xpm", 0, 0); // A CHANGER
 	return (session);
 }
 
@@ -56,7 +56,13 @@ t_window	init_window(t_session t_ses, char *map_file_path, char *title)
 	if (parse_map(&t_win, map_file_path, fd, nb_read) == -1 ||
 		check_map_with_propagation(&t_win) == -1)
 		return (window_null());
+//	fill_sprites(&t_win, map_file_path, fd, nb_read);
+
+//	dprintf(1, "nb_sprites = %f\n", t_win.map_info.sprites[5].x);
+
 	t_win.title = title;
+	t_win.x_w = ft_min(t_win.map_info.resolution_x, X_RES_SCREEN);
+	t_win.y_w = ft_min(t_win.map_info.resolution_y, Y_RES_SCREEN);
 //	t_win.window = mlx_new_window(t_ses.id, t_win.map_info.resolution_x,
 //								t_win.map_info.resolution_y, t_win.title);
 	return (t_win);

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/08 17:56:38 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/09 11:49:30 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		main()
 //	double		oldTime;
 
 	t_ses = init_session();
-	t_win = init_window(t_ses, "map/map2.cub", "Fenetre_1");
+	t_win = init_window(t_ses, "map/map.cub", "Fenetre_1");
 	player = init_player(t_win);
 
 //	print_player_info(player); /////////////////
@@ -67,8 +67,8 @@ int		main()
 	if (!t_win.window)
 		return (-1); // A AJUSTER/GERER
 
-	t_win.x_w = ft_min(t_win.map_info.resolution_x, X_RES_SCREEN);
-	t_win.y_w = ft_min(t_win.map_info.resolution_y, Y_RES_SCREEN);		
+//	t_win.x_w = ft_min(t_win.map_info.resolution_x, X_RES_SCREEN);
+//	t_win.y_w = ft_min(t_win.map_info.resolution_y, Y_RES_SCREEN);		
 	t_win.window = mlx_new_window(t_ses.id, t_win.x_w, t_win.y_w, t_win.title); // check si ca a marché ?
 
 	ft_display_image(t_ses, t_win, player);
