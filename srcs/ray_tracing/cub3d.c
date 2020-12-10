@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 15:51:02 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 17:28:46 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 **		- tracé de la ligne verticale du mur
 */
 
-void	ft_display_image(t_game game, t_session t_ses,
+t_image	ft_display_image(t_game game, t_session t_ses,
 		t_window t_win, t_player player)
 {
 	t_image		t_img;
@@ -46,12 +46,14 @@ void	ft_display_image(t_game game, t_session t_ses,
 	}
 	t_img = ft_display_stripes(t_ses, t_win, player, t_img);
 	mlx_put_image_to_window(t_ses.id, t_win.window, t_img.image, 0, 0);
+	return (t_img);
 }
 
 int		main()
 {
 	t_game		game;
 	void		*param;
+	t_image		t_img;
 //	double		time;
 //	double		oldTime;
 
@@ -62,10 +64,12 @@ int		main()
 		return (-1); // A AJUSTER/GERER	
 	game.window.window = mlx_new_window(game.session.id, game.window.x_w,
 					game.window.y_w, game.window.title); // check si ca a marché ?
-	ft_display_image(game, game.session, game.window, game.player);
+	t_img = ft_display_image(game, game.session, game.window, game.player);
+	dprintf(1, "saved image = %d\n", save_image("./saved_image/image_test", (char*)t_img.p_color));
 
 //	free(game.window.map);
 
+	mlx_hook(game.window.window, 17, 0, ft_clean_prog, &game);
 	mlx_hook(game.window.window, 2, 0, &ft_key_press, &game);
 	mlx_hook(game.window.window, 3, 0, &ft_key_release, &game);
 	mlx_loop_hook(game.session.id, &ft_move_player, &game);

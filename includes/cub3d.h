@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 15:50:48 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 17:28:37 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ typedef struct s_game
 /*
 ** ft_cub3d.c
 */
-void	ft_display_image(t_game game, t_session t_ses, t_window t_win, t_player player);
+t_image		ft_display_image(t_game game, t_session t_ses, t_window t_win, t_player player);
 
 /*
 ** ft_init.c
@@ -272,7 +272,7 @@ int	turn_player(t_game *game, int signe);
 int		ft_key_press(int key, t_game *game);
 int		ft_key_release(int key, t_game *game);
 int		ft_move_player(t_game *game);
-
+int		ft_clean_prog(t_game *game);
 
 /*
 ** sprites_utils.c
@@ -288,6 +288,11 @@ t_image			ft_display_stripes(t_session t_ses, t_window t_win,
 				t_player player, t_image t_img);
 void			ft_put_sprite_line_to_image(t_window t_win, t_image t_img,
 				t_image t_img_s, t_sprite_info s_info);
+
+/*
+** save_image.c
+*/
+int	save_image(char *path, char *buffer);
 
 /*
 ** ft_maths.c

@@ -6,6 +6,7 @@ next steps :
 	- gestion fermeture propre (ESC ou clique sur la croix)
 	- fix resolutions qui bug
 	- ajout --save
+	- gestion d'erreur
 */
 
 
