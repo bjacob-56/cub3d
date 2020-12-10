@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 09:30:20 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 12:30:48 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,23 @@ typedef struct	s_sprite
 	double	x;
 	double	y;
 }				t_sprite;
+
+typedef struct s_sprite_info
+{
+	int		draw_startx;
+	int		draw_endx;
+	int		draw_starty;
+	int		draw_endy;
+	int		width;
+	int		height;
+	double	transf_x;
+	double	transf_y;
+	double	spritex;
+	double	spritey;
+	double	invD;
+	int		screen_x;
+}				t_sprite_info;
+
 
 typedef struct	s_image
 {
@@ -160,7 +177,13 @@ typedef struct s_game
 ** ft_cub3d.c
 */
 void	ft_display_image(t_session t_ses, t_window t_win, t_player player);
-t_image	ft_display_stripes(t_session t_ses, t_window t_win, t_player player, t_image t_img, t_ray ray);
+t_image	ft_display_stripes(t_session t_ses, t_window t_win, t_player player, t_image t_img);
+
+t_sprite_info	get_sprite_info(t_window t_win, t_player player, int i);
+int		get_sprite_color(t_image t_img_s, t_sprite_info s_info, int j, int d);
+void	ft_put_sprite_line_to_image(t_window t_win, t_image t_img,
+		t_image t_img_s, t_sprite_info s_info);
+
 
 /*
 ** ft_init.c

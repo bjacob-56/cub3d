@@ -3,11 +3,10 @@
 /*
 
 next steps :
-	- ajout sprite
 	- gestion fermeture propre (ESC ou clique sur la croix)
-	- gestion minimalize window
 	- fix resolutions qui bug
 	- ajout --save
+	- fix bug sprite player dessus
 */
 
 

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 14:22:15 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/09 11:53:25 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 11:22:48 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int		move_player_side(t_game *game, int key) // A CORRIGER
 	int		signe;
 
 	signe = 1;
-	if (key == D)
+	if (key == A)
 		signe = -1;
 	pos_x = game->player.pos_x;
 	pos_y = game->player.pos_y;
-	pos_x += signe * ONE_STEP * game->player.dir_y; // pas bon
-	pos_y += signe * ONE_STEP * game->player.dir_x; // pas bon
+	pos_x += signe * ONE_STEP * game->player.dir_y;
+	pos_y += (-1) * signe * ONE_STEP * game->player.dir_x;
 	p_square_x = floor(pos_x);
 	p_square_y = floor(pos_y);
 	if (game->window.map[(int)p_square_x][(int)p_square_y] == 0 ||
