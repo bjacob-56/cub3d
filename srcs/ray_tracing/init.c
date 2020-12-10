@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 09:50:23 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:06:26 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_session	init_session(void)
 	session.images.so = open_image(session.id, "./images/mur_S.xpm", 0, 0);
 	session.images.ea = open_image(session.id, "./images/mur_E.xpm", 0, 0);
 	session.images.we = open_image(session.id, "./images/mur_W.xpm", 0, 0);
-	session.images.sprite = open_image(session.id, "./images/column.xpm", 0, 0); // A CHANGER
+	session.images.sprite = open_image(session.id,
+										"./images/column.xpm", 0, 0); // A CHANGER
 	return (session);
 }
 
@@ -56,16 +57,10 @@ t_window	init_window(t_session t_ses, char *map_file_path, char *title)
 	if (parse_map(&t_win, map_file_path, fd, nb_read) == -1 ||
 		check_map_with_propagation(&t_win) == -1)
 		return (window_null());
-//	fill_sprites(&t_win, map_file_path, fd, nb_read);
-
-//	dprintf(1, "nb_sprites = %f\n", t_win.map_info.sprites[0].x);
-
 	t_win.title = title;
 	t_win.x_w = ft_min(t_win.map_info.resolution_x, X_RES_SCREEN);
 	t_win.y_w = ft_min(t_win.map_info.resolution_y, Y_RES_SCREEN);
 	t_win.z_dist = malloc (sizeof(double) * t_win.x_w); // A PROTEGER !!
-//	t_win.window = mlx_new_window(t_ses.id, t_win.map_info.resolution_x,
-//								t_win.map_info.resolution_y, t_win.title);
 	return (t_win);
 }
 
@@ -87,20 +82,10 @@ t_player	init_player(t_window t_win)
 	player.plane_y = -1 * player.dir_x;
 	player.pos_x = t_win.map_info.start.column + 0.5;
 	player.pos_y = t_win.map_info.start.line + 0.5;
-//	player.pos_x = 1.5;
-//	player.pos_y = 1.5;
 	player.p_square_x = floor(player.pos_x);
 	player.p_square_y = floor(player.pos_y);
 	return (player);
 }
-
-/*
-void	open_window(void *mlx_ptr, t_window *t_win)
-{
-	t_win->window = mlx_new_window(mlx_ptr, t_win->map_info.resolution_x,
-								t_win->map_info.resolution_y, t_win->title); // check si ca a marché ?
-}
-*/
 
 t_image		open_image(void *mlx_ptr, char *img_path, int width, int height)
 {
@@ -113,7 +98,8 @@ t_image		open_image(void *mlx_ptr, char *img_path, int width, int height)
 		t_img.x_i = width;
 	if (!height)
 		t_img.y_i = height;
-	t_img.image = mlx_xpm_file_to_image(mlx_ptr, img_path, &t_img.x_i, &t_img.y_i); // check si ca a marché ?	
+	t_img.image = mlx_xpm_file_to_image(mlx_ptr, img_path,
+					&t_img.x_i, &t_img.y_i); // check si ca a marché ?	
 	img_c = (int*)mlx_get_data_addr(t_img.image, &p, &t_img.line_bytes, &e);
 	t_img.p_color = img_c;
 	return (t_img);

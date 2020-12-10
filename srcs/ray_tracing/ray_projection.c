@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:13:25 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 07:42:43 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:23:09 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	get_step_and_side_dist(t_player pl, t_ray *ray)
 }
 
 int		find_closest_wall(t_window t_win, t_player player,
-		t_vector *p_square, t_ray *ray)
+							t_vector *p_square, t_ray *ray)
 {
 	int	hit;
 	int	side;
@@ -68,7 +68,7 @@ int		find_closest_wall(t_window t_win, t_player player,
 	(*p_square).x = player.p_square_x;
 	(*p_square).y = player.p_square_y;
 	hit = 0;
-	while (!hit) // comment checker le mur le plus proche ?
+	while (!hit)
 	{
 		if ((*ray).side_dist.x <= (*ray).side_dist.y)
 		{
@@ -88,35 +88,6 @@ int		find_closest_wall(t_window t_win, t_player player,
 	return (side);
 }
 
-int		find_closest_sprite(t_window t_win, t_player player,
-		t_vector *p_square, t_ray *ray)
-{
-	int	hit;
-	int	side;
-
-	(*p_square).x = player.p_square_x;
-	(*p_square).y = player.p_square_y;
-	hit = 0;
-	while (!hit) // comment checker le mur le plus proche ?
-	{
-		if ((*ray).side_dist.x <= (*ray).side_dist.y)
-		{
-			(*ray).side_dist.x += (*ray).delta.x;
-			(*p_square).x += (*ray).step.x;
-			side = 0;
-		}
-		else
-		{
-			(*ray).side_dist.y += (*ray).delta.y;
-			(*p_square).y += (*ray).step.y;
-			side = 1;
-		}
-		if (t_win.map[(int)(*p_square).x][(int)(*p_square).y] > 0) // attention a ne pas depasser la limite
-			hit = 1;
-	}
-	return (side);
-}
-
 double	get_dist_wall(t_player player, t_ray ray, t_vector p_square)
 {
 	if (!ray.side)
@@ -125,27 +96,19 @@ double	get_dist_wall(t_player player, t_ray ray, t_vector p_square)
 		return ((p_square.y - player.pos_y + (1 - ray.step.y) / 2) / ray.dir.y);
 }
 
-double	get_dist_sprite(t_player player, t_ray ray, t_vector p_square)
+
+int		get_x_texture_coord(t_player player, t_ray ray, t_image t_img)
 {
-	int		dist;
-	
-	double	x2;
-	double	y2;
-	double	x1;
-	double	y1;
+	double	texture_x;
+	int		texture_coord;
 
-	x1 = ray.dir.x;
-	y1 = ray.dir.y;
-
-	x2 = p_square.x + ray.step.x / 2 - player.pos_x;
-	y2 = p_square.y + ray.step.y / 2 - player.pos_y;
-
-	dist = sqrt(x2 * x2 + y2 * y2);
-
-	return (dist);
-	
 	if (!ray.side)
-		return ((p_square.x - player.pos_x + (1 - ray.step.x) / 2) / ray.dir.x); // a voir si suffisant pour texture
+		texture_x = player.pos_y + ray.dist_wall * ray.dir.y;
 	else
-		return ((p_square.y - player.pos_y + (1 - ray.step.y) / 2) / ray.dir.y);
+		texture_x = player.pos_x + ray.dist_wall * ray.dir.x;
+	texture_x -= floor(texture_x);
+	if ((!ray.side && ray.step.x > 0) || (ray.side && ray.step.y < 0)) // magie magie
+		texture_x = 1 - texture_x;
+	texture_coord = (int)(t_img.x_i * texture_x); 				// a voir s'il faut inverser si ray.step < 0
+	return (texture_coord);
 }

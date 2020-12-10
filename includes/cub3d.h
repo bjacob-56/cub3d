@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 12:30:48 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:24:09 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,14 +176,7 @@ typedef struct s_game
 /*
 ** ft_cub3d.c
 */
-void	ft_display_image(t_session t_ses, t_window t_win, t_player player);
-t_image	ft_display_stripes(t_session t_ses, t_window t_win, t_player player, t_image t_img);
-
-t_sprite_info	get_sprite_info(t_window t_win, t_player player, int i);
-int		get_sprite_color(t_image t_img_s, t_sprite_info s_info, int j, int d);
-void	ft_put_sprite_line_to_image(t_window t_win, t_image t_img,
-		t_image t_img_s, t_sprite_info s_info);
-
+void	ft_display_image(t_game game, t_session t_ses, t_window t_win, t_player player);
 
 /*
 ** ft_init.c
@@ -192,7 +185,6 @@ t_session	init_session(void);
 t_window	window_null(void); // A AJUSTER ?
 t_window	init_window(t_session t_ses, char *map_file_path, char *title);
 t_player	init_player(t_window t_win);
-//void		open_window(void *mlx_ptr, t_window *t_win);
 t_image		open_image(void *mlx_ptr, char *img_path,
 			int width, int height);
 
@@ -223,11 +215,6 @@ int			get_nb_lines_columns_sprites(t_window *t_win, int fd,
 int			parse_map(t_window *t_win, char *map_file_path,
 			int fd, int nb_read);
 
-int		check_and_fill_sprite(t_window *t_win, char *line, int i, int j);
-int		fill_tab_sprites(t_window *t_win, int fd, char **line);
-int		fill_sprites(t_window *t_win, char *map_file_path, int fd, int nb_read);
-
-
 /*
 ** ft_check_map.c
 */
@@ -244,28 +231,19 @@ void		get_step_and_side_dist(t_player player, t_ray *ray);
 int			find_closest_wall(t_window t_win, t_player player,
 			t_vector *p_square, t_ray *ray);
 double		get_dist_wall(t_player player, t_ray ray, t_vector p_square);
-
-int		find_closest_sprite(t_window t_win, t_player player,
-		t_vector *p_square, t_ray *ray);
-double	get_dist_sprite(t_player player, t_ray ray, t_vector p_square);
-
+int			get_x_texture_coord(t_player player, t_ray ray, t_image t_img);
 
 /*
 ** ft_display_image.c
 */
 t_image		get_correct_wall(t_session t_ses, t_ray ray);
-int			get_x_texture_coord(t_player player, t_ray ray, t_image t_img);
-void	vertical_line_to_image(t_session t_ses, t_window t_win, t_image t_img_new,
-		t_player player, t_ray ray);
-void	ft_put_line_to_image(t_window t_win,
-		t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
-void	ft_put_ceiling_to_image(t_window t_win,
-		t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
-void	ft_put_floor_to_image(t_window t_win,
-		t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
-
-t_image	vertical_sprite_line_to_image(t_session t_ses, t_window t_win, t_image t_img_new,
-		t_player player, t_ray ray, t_vector p_square);
+void		vertical_line_to_image(t_game game, t_image t_img_new, t_ray ray);
+void		ft_put_line_to_image(t_window t_win,
+			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
+void		ft_put_ceiling_to_image(t_window t_win,
+			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
+void		ft_put_floor_to_image(t_window t_win,
+			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
 
 /*
 ** move.c
@@ -273,11 +251,19 @@ t_image	vertical_sprite_line_to_image(t_session t_ses, t_window t_win, t_image t
 int		ft_key(int key, t_game *game);
 
 /*
-** sprites.c
+** sprites_utils.c
 */
-void	sort_sprites(t_sprite *tab, int nb_sprites, t_player p);
+void			sort_sprites(t_sprite *tab, int nb_sprites, t_player p);
+t_sprite_info	get_sprite_info(t_window t_win, t_player player, int i);
+int				get_sprite_color(t_image t_img_s, t_sprite_info s_info, int j, int d);
 
-
+/*
+** sprites_display.c
+*/
+t_image			ft_display_stripes(t_session t_ses, t_window t_win,
+				t_player player, t_image t_img);
+void			ft_put_sprite_line_to_image(t_window t_win, t_image t_img,
+				t_image t_img_s, t_sprite_info s_info);
 
 /*
 ** ft_maths.c
