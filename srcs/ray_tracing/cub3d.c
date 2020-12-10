@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:49:57 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 15:51:02 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,38 +51,25 @@ void	ft_display_image(t_game game, t_session t_ses,
 int		main()
 {
 	t_game		game;
-//	t_session	t_ses;
-	t_window	t_win;
-	t_image		t_img;
-//	t_player	player;
 	void		*param;
-
 //	double		time;
 //	double		oldTime;
 
 	game.session = init_session();
-	game.window = init_window(game.session, "map/map2.cub", "Fenetre_1");
+	game.window = init_window(game.session, "map/map.cub", "Fenetre_1");
 	game.player = init_player(game.window);
-
-//	print_player_info(player); /////////////////
-
 	if (!game.window.window)
-		return (-1); // A AJUSTER/GERER
-
-//	t_win.x_w = ft_min(t_win.map_info.resolution_x, X_RES_SCREEN);
-//	t_win.y_w = ft_min(t_win.map_info.resolution_y, Y_RES_SCREEN);		
+		return (-1); // A AJUSTER/GERER	
 	game.window.window = mlx_new_window(game.session.id, game.window.x_w,
 					game.window.y_w, game.window.title); // check si ca a marché ?
-
-//	dprintf(1, "nb_sprites = %d\n", t_win.map_info.nb_sprites);
-
 	ft_display_image(game, game.session, game.window, game.player);
 
 //	free(game.window.map);
 
-	mlx_hook(game.window.window, 2, 0, &ft_key, &game);
+	mlx_hook(game.window.window, 2, 0, &ft_key_press, &game);
+	mlx_hook(game.window.window, 3, 0, &ft_key_release, &game);
+	mlx_loop_hook(game.session.id, &ft_move_player, &game);
 	mlx_loop(game.session.id);
 
 	//	mlx_clear_win_ptr(mlx_ptr, win_ptr);
-
 }

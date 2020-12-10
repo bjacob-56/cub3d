@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:52:01 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 15:19:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,12 @@ t_player	init_player(t_window t_win)
 	player.pos_y = t_win.map_info.start.line + 0.5;
 	player.p_square_x = floor(player.pos_x);
 	player.p_square_y = floor(player.pos_y);
+	player.move.straight_pos = 0;
+	player.move.straight_neg = 0;
+	player.move.turn_left = 0;
+	player.move.turn_right = 0;
+	player.move.side_left = 0;
+	player.move.side_right = 0;
 	return (player);
 }
 

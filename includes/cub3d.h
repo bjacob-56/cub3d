@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:44:56 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 15:50:48 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@
 
 # define X_RES_SCREEN 5120
 # define Y_RES_SCREEN 2880
+
+typedef struct	s_move
+{
+	int	straight_pos;
+	int	straight_neg;
+	int	turn_left;
+	int	turn_right;
+	int	side_left;
+	int	side_right;
+}				t_move;
 
 typedef struct	s_sprite
 {
@@ -137,6 +147,7 @@ typedef struct	s_player
 	double	plane_y;
 	double	p_square_x;
 	double	p_square_y;
+	t_move	move;
 }				t_player;
 
 typedef	struct	s_vector
@@ -250,7 +261,18 @@ void		ft_put_floor_to_image(t_window t_win,
 /*
 ** move.c
 */
-int		ft_key(int key, t_game *game);
+int	move_player_straight(t_game *game, int signe);
+int	move_player_side(t_game *game, int signe);
+int	turn_player(t_game *game, int signe);
+
+
+/*
+** event_handler.c
+*/
+int		ft_key_press(int key, t_game *game);
+int		ft_key_release(int key, t_game *game);
+int		ft_move_player(t_game *game);
+
 
 /*
 ** sprites_utils.c
