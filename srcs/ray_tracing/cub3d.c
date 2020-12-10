@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:17:55 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:49:57 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 **		- tracé de la ligne verticale du mur
 */
 
-void	ft_display_image(t_game game, t_session t_ses, t_window t_win, t_player player)
+void	ft_display_image(t_game game, t_session t_ses,
+		t_window t_win, t_player player)
 {
 	t_image		t_img;
 	t_ray		ray;
@@ -30,7 +31,8 @@ void	ft_display_image(t_game game, t_session t_ses, t_window t_win, t_player pla
 	int			e;
 
 	t_img.image = mlx_new_image(t_ses.id, t_win.x_w, t_win.y_w);
-	t_img.p_color = (int*)mlx_get_data_addr(t_img.image, &p, &t_img.line_bytes, &e);
+	t_img.p_color = (int*)mlx_get_data_addr(t_img.image, &p,
+					&t_img.line_bytes, &e);
 	ray.x = 0;
 	while (ray.x < t_win.x_w)
 	{
@@ -43,11 +45,8 @@ void	ft_display_image(t_game game, t_session t_ses, t_window t_win, t_player pla
 		ray.x++;
 	}
 	t_img = ft_display_stripes(t_ses, t_win, player, t_img);
-	mlx_put_image_to_window (t_ses.id, t_win.window, t_img.image, 0, 0);
+	mlx_put_image_to_window(t_ses.id, t_win.window, t_img.image, 0, 0);
 }
-
-
-
 
 int		main()
 {

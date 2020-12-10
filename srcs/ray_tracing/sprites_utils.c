@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites.c                                          :+:      :+:    :+:   */
+/*   sprites_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 12:47:33 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:15:09 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:55:26 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	switch_dist(double *tab, int i, int j)
+static void		switch_dist(double *tab, int i, int j)
 {
 	double	temp;
 
@@ -21,7 +21,7 @@ static void	switch_dist(double *tab, int i, int j)
 	tab[j] = temp;
 }
 
-static void	switch_sprites(t_sprite *tab, int i, int j)
+static void		switch_sprites(t_sprite *tab, int i, int j)
 {
 	t_sprite	temp;
 
@@ -30,7 +30,7 @@ static void	switch_sprites(t_sprite *tab, int i, int j)
 	tab[j] = temp;
 }
 
-void	sort_sprites(t_sprite *tab, int nb_sprites, t_player p)
+void			sort_sprites(t_sprite *tab, int nb_sprites, t_player p)
 {
 	int		i;
 	int		j;
@@ -79,19 +79,19 @@ t_sprite_info	get_sprite_info(t_window t_win, t_player player, int i)
 	s_info.draw_startx = (s_info.screen_x - s_info.width) / 2;
 	s_info.draw_endx = ft_min((s_info.screen_x + s_info.width) / 2,
 								t_win.x_w - 1);
-
 	return (s_info);
 }
 
-int		get_sprite_color(t_image t_img_s, t_sprite_info s_info, int j, int d)
+int				get_sprite_color(t_image t_img_s, t_sprite_info s_info,
+				int j, int d)
 {
 	int	color;
-	int texX;
-	int texY;
+	int tex_x;
+	int tex_y;
 
-	texY = ((d * t_img_s.y_i) / s_info.height) / 256;
-	texX = (int)(256 * (j - s_info.draw_startx) *
+	tex_y = ((d * t_img_s.y_i) / s_info.height) / 256;
+	tex_x = (int)(256 * (j - s_info.draw_startx) *
 			t_img_s.x_i / s_info.width) / 256;
-	color = t_img_s.p_color[t_img_s.line_bytes * texY / 4 + texX];
+	color = t_img_s.p_color[t_img_s.line_bytes * tex_y / 4 + tex_x];
 	return (color);
 }

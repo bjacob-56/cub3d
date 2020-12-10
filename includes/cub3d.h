@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:24:09 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:44:56 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,8 @@ t_image		open_image(void *mlx_ptr, char *img_path,
 int			get_map_resolution(t_map_info *map_info, char *line_bis);
 int			get_map_floor(t_map_info *map_info, char *line_bis);
 int			get_map_ceiling(t_map_info *map_info, char *line_bis);
+int			get_nb_lines_columns_sprites(t_window *t_win, int fd,
+			int size, char **line);
 
 /*
 ** ft_fill_map_info.c
@@ -209,11 +211,11 @@ int			**free_all_lines_and_map(int ***tab, int i_tab);
 */
 int			**ft_malloc_tab_2d(t_window t_win);
 int			check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j);
-int			fill_tab_map(t_window *t_win, int fd);
-int			get_nb_lines_columns_sprites(t_window *t_win, int fd,
-			int size, char **line);
+int		fill_tab_map(t_window *t_win, int fd, int i, int nb_sprites);
 int			parse_map(t_window *t_win, char *map_file_path,
 			int fd, int nb_read);
+void	set_start_map(t_window *t_win, int i, int j, char *line);
+
 
 /*
 ** ft_check_map.c

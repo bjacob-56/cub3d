@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:21:16 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:23:30 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:50:58 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,10 @@ void	ft_put_ceiling_to_image(t_window t_win, t_image t_img_src,
 			16 * 16 * t_win.map_info.c_colors[1] +
 			t_win.map_info.c_colors[2];
 	y_limit = ft_max((t_win.y_w - pix->line_height) / 2, 0);
-
 	pix->y_coord = 0;
 	while (pix->y_coord < y_limit) // a ajuster ?
 	{
-		t_img_new.p_color[pix->x_coord + t_win.x_w * pix->y_coord] = color; // pas sur
+		t_img_new.p_color[pix->x_coord + t_win.x_w *pix->y_coord] = color; // pas sur
 		pix->y_coord++;
 	}
 }
@@ -101,12 +100,9 @@ void	ft_put_floor_to_image(t_window t_win,
 			16 * 16 * t_win.map_info.f_colors[1] +
 			t_win.map_info.f_colors[2];
 	y_limit = t_win.y_w;
-
 	while (pix->y_coord < y_limit) // a ajuster ?
 	{
 		t_img_new.p_color[pix->x_coord + t_win.x_w * pix->y_coord] = color; // pas sur
 		pix->y_coord++;
 	}
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:06:26 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:52:01 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,13 @@ t_window	init_window(t_session t_ses, char *map_file_path, char *title)
 	}
 	res_x = t_win.map_info.resolution_x;
 	res_y = t_win.map_info.resolution_y;
-
 	if (parse_map(&t_win, map_file_path, fd, nb_read) == -1 ||
 		check_map_with_propagation(&t_win) == -1)
 		return (window_null());
 	t_win.title = title;
 	t_win.x_w = ft_min(t_win.map_info.resolution_x, X_RES_SCREEN);
 	t_win.y_w = ft_min(t_win.map_info.resolution_y, Y_RES_SCREEN);
-	t_win.z_dist = malloc (sizeof(double) * t_win.x_w); // A PROTEGER !!
+	t_win.z_dist = malloc(sizeof(double) * t_win.x_w); // A PROTEGER !!
 	return (t_win);
 }
 

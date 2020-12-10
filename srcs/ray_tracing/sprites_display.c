@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:17:21 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:17:35 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 14:53:55 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_image	ft_display_stripes(t_session t_ses, t_window t_win,
 		t_player player, t_image t_img)
 {
-	int	i;
-	t_image	t_img_s;
+	int				i;
+	t_image			t_img_s;
 	t_sprite_info	s_info;
 
 	t_img_s = t_ses.images.sprite;
