@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/09 12:45:02 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 09:50:23 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ t_window	init_window(t_session t_ses, char *map_file_path, char *title)
 		return (window_null());
 //	fill_sprites(&t_win, map_file_path, fd, nb_read);
 
-//	dprintf(1, "nb_sprites = %f\n", t_win.map_info.sprites[5].x);
+//	dprintf(1, "nb_sprites = %f\n", t_win.map_info.sprites[0].x);
 
 	t_win.title = title;
 	t_win.x_w = ft_min(t_win.map_info.resolution_x, X_RES_SCREEN);
 	t_win.y_w = ft_min(t_win.map_info.resolution_y, Y_RES_SCREEN);
+	t_win.z_dist = malloc (sizeof(double) * t_win.x_w); // A PROTEGER !!
 //	t_win.window = mlx_new_window(t_ses.id, t_win.map_info.resolution_x,
 //								t_win.map_info.resolution_y, t_win.title);
 	return (t_win);

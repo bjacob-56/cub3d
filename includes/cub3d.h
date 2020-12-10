@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/09 16:09:11 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 09:30:20 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ typedef struct	s_map_info
 	int		c_colors[3];
 	int		nb_lines;
 	int		nb_columns;
-//	int		nb_sprites;
-//	t_sprite	*sprites;
+	int		nb_sprites;
+	t_sprite	*sprites;
 	t_start	start;
 	int		is_valid;
 }				t_map_info;
@@ -107,6 +107,7 @@ typedef struct	s_window
 	int			**map;
 	char		*title;
 	t_map_info	map_info;
+	double		*z_dist;
 }				t_window;
 
 typedef struct	s_player
@@ -223,6 +224,8 @@ double		get_dist_wall(t_player player, t_ray ray, t_vector p_square);
 
 int		find_closest_sprite(t_window t_win, t_player player,
 		t_vector *p_square, t_ray *ray);
+double	get_dist_sprite(t_player player, t_ray ray, t_vector p_square);
+
 
 /*
 ** ft_display_image.c
@@ -239,14 +242,17 @@ void	ft_put_floor_to_image(t_window t_win,
 		t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
 
 t_image	vertical_sprite_line_to_image(t_session t_ses, t_window t_win, t_image t_img_new,
-		t_player player, t_ray ray);
+		t_player player, t_ray ray, t_vector p_square);
 
 /*
 ** move.c
 */
 int		ft_key(int key, t_game *game);
 
-
+/*
+** sprites.c
+*/
+void	sort_sprites(t_sprite *tab, int nb_sprites, t_player p);
 
 
 

@@ -87,7 +87,7 @@ int		set_data_map_info(int fd, t_map_info *map_info)
 		nb_param += res;
 		free(line);
 	}
-//	map_info->nb_sprites = 0;
+	map_info->nb_sprites = 0;
 	if (nb_param != 8)
 		nb_read = -1;
 	return (nb_read);

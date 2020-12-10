@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:13:25 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/09 15:00:16 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 07:42:43 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,31 @@ int		find_closest_sprite(t_window t_win, t_player player,
 
 double	get_dist_wall(t_player player, t_ray ray, t_vector p_square)
 {
+	if (!ray.side)
+		return ((p_square.x - player.pos_x + (1 - ray.step.x) / 2) / ray.dir.x); // a voir si suffisant pour texture
+	else
+		return ((p_square.y - player.pos_y + (1 - ray.step.y) / 2) / ray.dir.y);
+}
+
+double	get_dist_sprite(t_player player, t_ray ray, t_vector p_square)
+{
+	int		dist;
+	
+	double	x2;
+	double	y2;
+	double	x1;
+	double	y1;
+
+	x1 = ray.dir.x;
+	y1 = ray.dir.y;
+
+	x2 = p_square.x + ray.step.x / 2 - player.pos_x;
+	y2 = p_square.y + ray.step.y / 2 - player.pos_y;
+
+	dist = sqrt(x2 * x2 + y2 * y2);
+
+	return (dist);
+	
 	if (!ray.side)
 		return ((p_square.x - player.pos_x + (1 - ray.step.x) / 2) / ray.dir.x); // a voir si suffisant pour texture
 	else
