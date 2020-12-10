@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 12:47:33 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:55:26 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 17:56:42 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ t_sprite_info	get_sprite_info(t_window t_win, t_player player, int i)
 
 	s_info.spritex = t_win.map_info.sprites[i].x - player.pos_x;
 	s_info.spritey = t_win.map_info.sprites[i].y - player.pos_y;
-	s_info.invD = 1.0 / (player.plane_x * player.dir_y -
+	s_info.inv_d = 1.0 / (player.plane_x * player.dir_y -
 						player.plane_y * player.dir_x);
-	s_info.transf_x = s_info.invD * (player.dir_y * s_info.spritex -
+	s_info.transf_x = s_info.inv_d * (player.dir_y * s_info.spritex -
 						player.dir_x * s_info.spritey);
-	s_info.transf_y = s_info.invD * (player.plane_x * s_info.spritey -
+	s_info.transf_y = s_info.inv_d * (player.plane_x * s_info.spritey -
 						player.plane_y * s_info.spritex);
 	s_info.screen_x = (int)(t_win.x_w * (1 +
 						s_info.transf_x / s_info.transf_y));

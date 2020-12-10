@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 17:28:37 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 17:56:39 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_sprite_info
 	double	transf_y;
 	double	spritex;
 	double	spritey;
-	double	invD;
+	double	inv_d;
 	int		screen_x;
 }				t_sprite_info;
 

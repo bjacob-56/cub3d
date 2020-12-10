@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 17:28:46 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 17:48:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,12 @@ int		main()
 	game.window.window = mlx_new_window(game.session.id, game.window.x_w,
 					game.window.y_w, game.window.title); // check si ca a marché ?
 	t_img = ft_display_image(game, game.session, game.window, game.player);
-	dprintf(1, "saved image = %d\n", save_image("./saved_image/image_test", (char*)t_img.p_color));
+
+	char *tab_bmp;
+
+	tab_bmp = (char*)t_img.p_color;
+	dprintf(1, "tab : %s\n", tab_bmp);
+	dprintf(1, "saved image = %d\n", save_image("./saved_image/image_test", tab_bmp));
 
 //	free(game.window.map);
 
