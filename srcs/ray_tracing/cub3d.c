@@ -6,11 +6,20 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 12:33:47 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 13:51:25 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+/*
+** Etapes :
+**		- calcul de la direction du rayon
+**		- calcul des pas entre deux murs selon x et y
+**		- projection du rayon jusqu'au mur le plus proche
+**		- calcul de la distance entre le player et le mur trouvé
+**		- tracé de la ligne verticale du mur
+*/
 
 void	ft_display_image(t_session t_ses, t_window t_win, t_player player)
 {
@@ -23,34 +32,19 @@ void	ft_display_image(t_session t_ses, t_window t_win, t_player player)
 	t_img.image = mlx_new_image(t_ses.id, t_win.x_w, t_win.y_w);
 	t_img.p_color = (int*)mlx_get_data_addr(t_img.image, &p, &t_img.line_bytes, &e);
 	ray.x = 0;
-
-//dprintf(1, "\n\n-------------------------------------------------------\n");
-
 	while (ray.x < t_win.x_w)
 	{
-// calcul de la direction du rayon
 		set_ray_dir_and_delta(t_win, player, &ray);
-
-// calcul des pas entre deux murs selon x et y
 		get_step_and_side_dist(player, &ray);
-
-// projection du rayon jusqu'au mur le plus proche
 		ray.side = find_closest_wall(t_win, player, &p_square, &ray);
-
-// calcul de la distance entre le player et le mur trouvé
 		ray.dist_wall = get_dist_wall(player, ray, p_square);
 		t_win.z_dist[ray.x] = ray.dist_wall;
-
-// tracé de la ligne verticale du mur
-		vertical_line_to_image(t_ses, t_win, t_img, player, ray); // a creer
+		vertical_line_to_image(t_ses, t_win, t_img, player, ray);
 		ray.x++;
 	}
-
 	t_img = ft_display_stripes(t_ses, t_win, player, t_img);
-
 	mlx_put_image_to_window (t_ses.id, t_win.window, t_img.image, 0, 0);
 }
-
 
 t_image	ft_display_stripes(t_session t_ses, t_window t_win,
 		t_player player, t_image t_img)
@@ -64,8 +58,12 @@ t_image	ft_display_stripes(t_session t_ses, t_window t_win,
 	sort_sprites(t_win.map_info.sprites, t_win.map_info.nb_sprites, player);
 	while (i < t_win.map_info.nb_sprites)
 	{
-		s_info = get_sprite_info(t_win, player, i);
-		ft_put_sprite_line_to_image(t_win, t_img, t_img_s, s_info);
+		if (!(fabs(t_win.map_info.sprites[i].x - player.pos_x) < 0.02 &&
+			fabs(t_win.map_info.sprites[i].y - player.pos_y) < 0.02))
+		{
+			s_info = get_sprite_info(t_win, player, i);
+			ft_put_sprite_line_to_image(t_win, t_img, t_img_s, s_info);
+		}
 		i++;
 	}
 	return (t_img);

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:21:16 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 09:22:17 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/10 13:53:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,6 @@ t_image	get_correct_wall(t_session t_ses, t_ray ray)
 	return (t_img);
 }
 
-/*
-t_image	get_correct_wall(t_session t_ses, t_ray ray)
-{
-	t_image	t_img;
-
-	if (!ray.side)
-	{
-		if (ray.step.x > 0)
-			t_img = t_ses.images.we;
-		else
-			t_img = t_ses.images.ea;
-	}
-	else
-	{
-		if (ray.step.y > 0)
-			t_img = t_ses.images.so;
-		else
-			t_img = t_ses.images.no;
-	}
-	return (t_img);
-}
-*/
-
 int		get_x_texture_coord(t_player player, t_ray ray, t_image t_img)
 {
 	double	texture_x;
@@ -72,8 +49,6 @@ int		get_x_texture_coord(t_player player, t_ray ray, t_image t_img)
 	return (texture_coord);
 }
 
-////////////////////////////////////////
-
 void	vertical_line_to_image(t_session t_ses, t_window t_win, t_image t_img_new,
 		t_player player, t_ray ray)
 {
@@ -81,16 +56,10 @@ void	vertical_line_to_image(t_session t_ses, t_window t_win, t_image t_img_new,
 	int				x_texture_coord;
 	t_pixel_info	pix;
 
-// hauteur de la ligne a tracer
 	pix.line_height = (int)(LINE_HEIGHT_STD / ray.dist_wall);
-
-// dessin de la ligne verticale de la bonne texture
 	t_img_src = get_correct_wall(t_ses, ray);
-
-// calcul du x de la texture
 	pix.x_img = get_x_texture_coord(player, ray, t_img_src);
 	pix.x_coord = ray.x;
-
 	ft_put_ceiling_to_image(t_win, t_img_src, &pix, t_img_new);
 	ft_put_line_to_image(t_win, t_img_src, &pix, t_img_new);
 	ft_put_floor_to_image(t_win, t_img_src, &pix, t_img_new);
@@ -104,10 +73,8 @@ void	ft_put_line_to_image(t_window t_win,
 	int		i;
 	int		color;
 
-//	pix->x_img = ft_min(pix->x_img, t_img.x_i - 1); // a voir si -1 ou non // vraiment nécessaire ?
 	pix->y_img = 0;
 	y_step = (double)t_img_src.y_i / (double)pix->line_height;
-//	pix->y_coord = ft_max((t_win.y_w - pix->line_height) / 2, 0);
 	y_off = ft_max(y_step * (pix->line_height - t_win.y_w) / 2, 0);
 	i = 0;
 	while (i < pix->line_height && pix->y_coord < t_win.y_w) // a ajuster ?
@@ -115,7 +82,6 @@ void	ft_put_line_to_image(t_window t_win,
 		pix->y_img = (int)(i * y_step + y_off);
 		color = t_img_src.p_color[pix->x_img + t_img_src.line_bytes * pix->y_img / 4];
 		t_img_new.p_color[pix->x_coord + t_win.x_w * pix->y_coord] = color; // pas sur
-//		mlx_pixel_put(mlx_ptr, t_win.window, pix->x_coord, pix->y_coord, color);
 		i++;
 		pix->y_coord++;
 	}
@@ -139,7 +105,6 @@ void	ft_put_ceiling_to_image(t_window t_win,
 		pix->y_coord++;
 	}
 }
-
 
 void	ft_put_floor_to_image(t_window t_win,
 		t_image t_img_src, t_pixel_info *pix, t_image t_img_new)
