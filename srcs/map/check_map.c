@@ -6,19 +6,19 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:45:56 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:45:58 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 11:53:34 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int		**copy_map_to_map_bis(t_window t_win)
+int		**copy_map_to_map_bis(t_game *game, t_window t_win)
 {
 	int **map_bis;
 	int	i;
 	int	j;
 
-	if (!(map_bis = ft_malloc_tab_2d(t_win)))
+	if (!(map_bis = ft_malloc_tab_2d(game)))
 		return (0);
 	i = 0;
 	while (i < t_win.map_info.nb_lines)
@@ -57,21 +57,31 @@ void	check_next_point(t_window *t_win, int **map_bis, int i, int j)
 	}
 }
 
-int		check_map_with_propagation(t_window *t_win)
+int		check_map_with_propagation(t_game *game, t_window *t_win)
 {
 	int	i_start;
 	int	j_start;
 	int **map_bis;
 
-	if (!(map_bis = copy_map_to_map_bis(*t_win)))
+	if (!(map_bis = copy_map_to_map_bis(game, *t_win)))
 		return (-1);
 	i_start = t_win->map_info.start.column;
 	j_start = t_win->map_info.start.line;
 	if (t_win->map_info.is_valid == -1)
 		return (-1);
 	check_next_point(t_win, map_bis, i_start, j_start);
-	free_all_lines_and_map(&map_bis, t_win->map_info.nb_lines);
 	if (t_win->map_info.is_valid == 1)
 		return (1);
 	return (-1);
+}
+
+int	go_to_nb_read(int fd, char **line, int nb_read)
+{
+	free_line(line);
+	while (nb_read-- > 0)
+	{
+		if (get_next_line(fd, line) == -1)
+			return (free_line(line));
+	}
+	return (1);
 }

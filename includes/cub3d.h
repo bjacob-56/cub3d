@@ -6,12 +6,12 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 17:56:39 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 11:54:53 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_CUB3D_H
-# define FT_CUB3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -37,11 +37,11 @@
 # define RIGHT 124
 # define ESC 53
 
-# define THETA 0.1
-# define ONE_STEP 0.3
+# define THETA 0.07
+# define ONE_STEP 0.2
 
-# define X_RES_SCREEN 5120
-# define Y_RES_SCREEN 2880
+# define X_RES_SCREEN 2560
+# define Y_RES_SCREEN 1440
 
 typedef struct	s_move
 {
@@ -181,8 +181,12 @@ typedef struct s_game
 	t_session	session;
 	t_window	window;
 	t_player	player;
+	t_list		*ptrs;
 }				t_game;
 
+/*
+** -----------------------------     MAINS     ----------------------------- **
+*/
 
 /*
 ** ft_cub3d.c
@@ -193,11 +197,23 @@ t_image		ft_display_image(t_game game, t_session t_ses, t_window t_win, t_player
 ** ft_init.c
 */
 t_session	init_session(void);
-t_window	window_null(void); // A AJUSTER ?
-t_window	init_window(t_session t_ses, char *map_file_path, char *title);
+t_window	window_null(void); // A UTILISER ?
+int			init_window(t_game *game, char *map_file_path, char *title);
 t_player	init_player(t_window t_win);
 t_image		open_image(void *mlx_ptr, char *img_path,
 			int width, int height);
+
+/*
+** clear_objects.c
+*/
+void	*malloc_lst(t_game *game, int size);
+int		free_all_ptr(t_game *game);
+int		free_line(char **line);
+
+
+/*
+** -----------------------------     MAP     ----------------------------- **
+*/
 
 /*
 ** ft_get_map_info.c
@@ -207,6 +223,7 @@ int			get_map_floor(t_map_info *map_info, char *line_bis);
 int			get_map_ceiling(t_map_info *map_info, char *line_bis);
 int			get_nb_lines_columns_sprites(t_window *t_win, int fd,
 			int size, char **line);
+int			ft_reopen(int fd, char *map_file_path);
 
 /*
 ** ft_fill_map_info.c
@@ -214,26 +231,32 @@ int			get_nb_lines_columns_sprites(t_window *t_win, int fd,
 void		init_map_info(t_map_info *map_info);
 int			free_map_info_data(t_map_info *map_info);
 int			fill_map_info(char *line, t_map_info *map_info);
-int			set_data_map_info(int fd, t_map_info *map_info);
-int			**free_all_lines_and_map(int ***tab, int i_tab);
+int			set_data_map_info(int fd, t_map_info *map_info, int nb_read,
+						int nb_param);
+//int			**free_all_lines_and_map(int ***tab, int i_tab);
 
 /*
 ** ft_parse_map.c
 */
-int			**ft_malloc_tab_2d(t_window t_win);
+int			**ft_malloc_tab_2d(t_game *game);
 int			check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j);
-int		fill_tab_map(t_window *t_win, int fd, int i, int nb_sprites);
-int			parse_map(t_window *t_win, char *map_file_path,
+int			fill_tab_map(t_game *g, int fd, int i, char **line);
+int			parse_map(t_game *game, char *map_file_path,
 			int fd, int nb_read);
-void	set_start_map(t_window *t_win, int i, int j, char *line);
-
+void		set_start_map(t_window *t_win, int i, int j, char *line);
 
 /*
 ** ft_check_map.c
 */
-int			**copy_map_to_map_bis(t_window t_win);
+int		**copy_map_to_map_bis(t_game *game, t_window t_win);
 void		check_next_point(t_window *t_win, int **map_bis, int i, int j);
-int			check_map_with_propagation(t_window *t_win);
+int		check_map_with_propagation(t_game *game, t_window *t_win);
+int		go_to_nb_read(int fd, char **line, int nb_read);
+
+
+/*
+** -----------------------------     RAY TRACING     ----------------------------- **
+*/
 
 /*
 ** ft_ray_projection.c
@@ -259,22 +282,6 @@ void		ft_put_floor_to_image(t_window t_win,
 			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
 
 /*
-** move.c
-*/
-int	move_player_straight(t_game *game, int signe);
-int	move_player_side(t_game *game, int signe);
-int	turn_player(t_game *game, int signe);
-
-
-/*
-** event_handler.c
-*/
-int		ft_key_press(int key, t_game *game);
-int		ft_key_release(int key, t_game *game);
-int		ft_move_player(t_game *game);
-int		ft_clean_prog(t_game *game);
-
-/*
 ** sprites_utils.c
 */
 void			sort_sprites(t_sprite *tab, int nb_sprites, t_player p);
@@ -290,9 +297,36 @@ void			ft_put_sprite_line_to_image(t_window t_win, t_image t_img,
 				t_image t_img_s, t_sprite_info s_info);
 
 /*
+** -----------------------------     EVENTS     ----------------------------- **
+*/
+
+/*
+** event_handler.c
+*/
+int		ft_key_press(int key, t_game *game);
+int		ft_key_release(int key, t_game *game);
+int		ft_move_player(t_game *game);
+int		ft_clean_prog(t_game *game);
+
+/*
+** move.c
+*/
+int	move_player_straight(t_game *game, int signe);
+int	move_player_side(t_game *game, int signe);
+int	turn_player(t_game *game, int signe);
+
+/*
+** -----------------------------     SAVE IMAGE     ----------------------------- **
+*/
+
+/*
 ** save_image.c
 */
 int	save_image(char *path, char *buffer);
+
+/*
+** -----------------------------     MATHS     ----------------------------- **
+*/
 
 /*
 ** ft_maths.c
@@ -300,11 +334,11 @@ int	save_image(char *path, char *buffer);
 int			ft_max(int a, int b);
 int			ft_min(int a, int b);
 
+
 /////////////////////////////////////
 void	print_map(t_window t_win, int **map);
 void	print_map_info(t_map_info map_info);
 void	print_player_info(t_player player);
-
 /////////////////////////////////////
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 15:19:35 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 11:58:08 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_session	init_session(void)
 	return (session);
 }
 
+/*
 t_window	window_null(void) // A AJUSTER ?
 {
 	t_window t_win;
@@ -33,10 +34,10 @@ t_window	window_null(void) // A AJUSTER ?
 	t_win.window = NULL;
 	return (t_win);
 }
+*/
 
-t_window	init_window(t_session t_ses, char *map_file_path, char *title)
+int			init_window(t_game *g, char *map_file_path, char *title)
 {
-	t_window	t_win;
 	int			fd;
 	int			nb_read;
 	int			res_x;
@@ -44,23 +45,24 @@ t_window	init_window(t_session t_ses, char *map_file_path, char *title)
 
 	fd = open(map_file_path, O_RDONLY);
 	if (fd < 0)
-		return (window_null());
-	nb_read = set_data_map_info(fd, &t_win.map_info);
+		return (-1);
+	nb_read = set_data_map_info(fd, &g->window.map_info, 0, 0);
 	if (nb_read == -1)
 	{
-		free_map_info_data(&t_win.map_info);
-		return (window_null()); // 							reponse a gerer
+		free_map_info_data(&g->window.map_info); // a gerer ici ?? A VOIR
+		return (-1);
 	}
-	res_x = t_win.map_info.resolution_x;
-	res_y = t_win.map_info.resolution_y;
-	if (parse_map(&t_win, map_file_path, fd, nb_read) == -1 ||
-		check_map_with_propagation(&t_win) == -1)
-		return (window_null());
-	t_win.title = title;
-	t_win.x_w = ft_min(t_win.map_info.resolution_x, X_RES_SCREEN);
-	t_win.y_w = ft_min(t_win.map_info.resolution_y, Y_RES_SCREEN);
-	t_win.z_dist = malloc(sizeof(double) * t_win.x_w); // A PROTEGER !!
-	return (t_win);
+	res_x = g->window.map_info.resolution_x;
+	res_y = g->window.map_info.resolution_y;
+	if (parse_map(g, map_file_path, fd, nb_read) == -1 ||
+		check_map_with_propagation(g, &g->window) == -1)
+			return (-1);
+	g->window.title = title;
+	g->window.x_w = ft_min(g->window.map_info.resolution_x, X_RES_SCREEN);
+	g->window.y_w = ft_min(g->window.map_info.resolution_y, Y_RES_SCREEN);
+	if (!(g->window.z_dist = malloc_lst(g, sizeof(double) * g->window.x_w)))
+		return (-1);
+	return (1);
 }
 
 t_player	init_player(t_window t_win)

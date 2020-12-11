@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:58 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:48:21 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 09:54:44 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	get_nb_lines_columns_sprites(t_window *t_win, int fd,
 	int	c_max;
 	int j;
 
+	free_line(line);
 	t_win->map_info.nb_sprites = 0;
 	t_win->map_info.nb_columns = 0;
 	t_win->map_info.nb_lines = 0;
@@ -102,16 +103,21 @@ int	get_nb_lines_columns_sprites(t_window *t_win, int fd,
 	{
 		c_max = ft_max(t_win->map_info.nb_columns, ft_strlen(*line));
 		j = 0;
-		while ((*line)[j])
+		while (j < ft_strlen(*line))
 			if ((*line)[j++] == '2')
 				t_win->map_info.nb_sprites++;
 		t_win->map_info.nb_columns = c_max;
 		t_win->map_info.nb_lines++;
-		free(*line);
+		free_line(line);
 		size = get_next_line(fd, line);
 	}
-	if (size == -1)
-		return (-1);
-	free(*line);
+	free_line(line);
 	return (size);
+}
+
+int	ft_reopen(int fd, char *map_file_path)
+{
+	close(fd);
+	fd = open(map_file_path, O_RDONLY);
+	return (fd);
 }

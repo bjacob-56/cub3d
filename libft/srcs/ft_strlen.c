@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 10:54:33 by bjacob            #+#    #+#             */
-/*   Updated: 2020/11/22 12:15:01 by bjacob56         ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 09:50:39 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strlen(const char *str)
 	int nb;
 
 	nb = 0;
+	if (!str)
+		return (-1);
 	while (*(str + nb) != '\0')
 	{
 		nb = nb + 1;

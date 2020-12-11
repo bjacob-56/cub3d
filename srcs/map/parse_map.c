@@ -6,24 +6,26 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:29:50 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:44:58 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 11:51:20 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int		**ft_malloc_tab_2d(t_window t_win)
+int		**ft_malloc_tab_2d(t_game *game)
 {
 	int	**map;
 	int	i;
 
-	if (!(map = malloc(sizeof(int*) * t_win.map_info.nb_lines)))
+	if (!(map = malloc_lst(game, sizeof(int*) *
+				game->window.map_info.nb_lines)))
 		return (NULL);
 	i = 0;
-	while (i < t_win.map_info.nb_lines)
+	while (i < game->window.map_info.nb_lines)
 	{
-		if (!(map[i] = malloc(sizeof(int) * t_win.map_info.nb_columns))) // a voir si calloc adapté
-			return (free_all_lines_and_map(&map, i));
+		if (!(map[i] = malloc_lst(game, sizeof(int) *
+						game->window.map_info.nb_columns)))
+			return (NULL); // gestion ici du free_all_lines_and_map ?
 		i++;
 	}
 	return (map);
@@ -73,60 +75,57 @@ int		check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j)
 	return (1);
 }
 
-int		fill_tab_map(t_window *t_win, int fd, int i, int nb_sprites)
+int		fill_tab_map(t_game *g, int fd, int i, char **line)
 {
 	int		j;
 	int		len_line;
 	int		size;
-	char	*line;
 
-	if (!(t_win->map_info.sprites = malloc(sizeof(t_sprite) * nb_sprites)))
+	if (!(g->window.map_info.sprites =
+		malloc_lst(g, sizeof(t_sprite) * g->window.map_info.nb_sprites)))
 		return (-1);
-	t_win->map_info.nb_sprites = 0;
-	size = get_next_line(fd, &line);
-	while (size > 0 && i < t_win->map_info.nb_lines)
+	g->window.map_info.nb_sprites = 0;
+	size = get_next_line(fd, line);
+	while (size > 0 && i < g->window.map_info.nb_lines)
 	{
-		len_line = ft_strlen(line);
+		len_line = ft_strlen(*line);
 		j = -1;
 		while (++j < len_line)
-			if (check_and_fill_cell_i_j(t_win, line, i, j) == -1)
+			if (check_and_fill_cell_i_j(&g->window, *line, i, j) == -1)
 				return (-1);
-		while (j < t_win->map_info.nb_columns)
-			t_win->map[i][j++] = -1;
-		free(line);
-		size = get_next_line(fd, &line);
+		while (j < g->window.map_info.nb_columns)
+			g->window.map[i][j++] = -1;
+		free_line(line);
+		size = get_next_line(fd, line);
 		i++;
 	}
-	if (i != t_win->map_info.nb_lines)
-		return (-1);
+	if (i != g->window.map_info.nb_lines)
+		return (free_line(line));
 	return (1);
 }
 
-int		parse_map(t_window *t_win, char *map_file_path, int fd, int nb_read)
+int		parse_map(t_game *g, char *map_file_path, int fd, int nb_read)
 {
 	int		size;
 	char	*line;
 
+	line = NULL;
 	size = get_next_line(fd, &line);
-	while (size > 0 && !line[0])
+	while (size > 0 && line[0])
 	{
-		free(line);
+		free_line(&line);
 		size = get_next_line(fd, &line);
 		nb_read++;
 	}
-	if (size <= 0 ||
-		(size = get_nb_lines_columns_sprites(t_win, fd, size, &line)) == -1 ||
-		!(t_win->map = ft_malloc_tab_2d(*t_win)))
-		return (-1); // a gerer derriere
-	close(fd);
-	fd = open(map_file_path, O_RDONLY); // autre maniere de revenir au debut du fichier ?
-	while (nb_read-- > 0)
-		get_next_line(fd, &line);
-	if (fill_tab_map(t_win, fd, 0, t_win->map_info.nb_sprites) == -1)
-	{
-		free_all_lines_and_map(&t_win->map, t_win->map_info.nb_lines);
+	if (size < 0 ||
+		(size = get_nb_lines_columns_sprites(&g->window, fd, size, &line))
+			== -1 || !(g->window.map = ft_malloc_tab_2d(g)) ||
+			(fd = ft_reopen(fd, map_file_path)) == -1)
+		return (free_line(&line)); // -1 a gerer derriere
+	if (go_to_nb_read(fd, &line, nb_read) == -1)
 		return (-1);
-	}
+	if (fill_tab_map(g, fd, 0, &line) == -1)
+		return (-1);
 	close(fd);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:03 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:47:03 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 11:58:00 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		fill_map_info(char *line, t_map_info *map_info)
 	if (!ft_strncmp(line, "R ", 2))
 		res = get_map_resolution(map_info, line + 2);
 	else if (!ft_strncmp(line, "NO ", 3))
-		map_info->path_no = ft_strtrim(line + 3, " ");
+		map_info->path_no = ft_strtrim(line + 3, " "); // mallocs a gerer et proteger
 	else if (!ft_strncmp(line, "SO ", 3))
 		map_info->path_so = ft_strtrim(line + 3, " ");
 	else if (!ft_strncmp(line, "WE ", 3))
@@ -66,16 +66,14 @@ int		fill_map_info(char *line, t_map_info *map_info)
 	return (res);
 }
 
-int		set_data_map_info(int fd, t_map_info *map_info)
+int		set_data_map_info(int fd, t_map_info *map_info, int nb_read,
+						int nb_param)
 {
 	int		size;
 	char	*line;
 	int		res;
-	int		nb_param;
-	int		nb_read;
 
-	nb_read = 0;
-	nb_param = 0;
+	line = NULL;
 	size = 1;
 	init_map_info(map_info);
 	while (nb_param < 8 && ((size = get_next_line(fd, &line)) > 0))
@@ -85,8 +83,9 @@ int		set_data_map_info(int fd, t_map_info *map_info)
 		if (res == -1)
 			return (free_error(line));
 		nb_param += res;
-		free(line);
+		free_line(&line);
 	}
+	free_line(&line);
 	map_info->nb_sprites = 0;
 	if (nb_param != 8)
 		nb_read = -1;
