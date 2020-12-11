@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 16:29:15 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 17:05:46 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,7 +323,7 @@ int	turn_player(t_game *game, int signe);
 /*
 ** save_image.c
 */
-int	save_image(char *path, char *buffer);
+int	save_image(char *path, t_game game, int len);
 
 /*
 ** -----------------------------     MATHS     ----------------------------- **

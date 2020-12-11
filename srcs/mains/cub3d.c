@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 16:34:02 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 18:07:53 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		main()
 {
 	t_game		game;
 	void		*param;
-	t_image		t_img;
+//	t_image		t_img;
 //	double		time;
 //	double		oldTime;
 
@@ -74,12 +74,25 @@ int		main()
 	if (ft_display_image(&game, game.session, game.window, game.player) == -1)
 		return (free_all_ptr(&game));
 
-	// char *tab_bmp;
-	// int	e;
-	// int p;
-	// tab_bmp = mlx_get_data_addr(t_img.image, &p,
-	// 				&t_img.line_bytes, &e);
-	// dprintf(1, "tab : %s\n", tab_bmp);
+	//  char *tab_bmp;
+	//  int	e;
+	//  int p;
+	//  tab_bmp = (char*)mlx_get_data_addr(game.img.image, &p,
+	//  				&game.img.line_bytes, &e);
+//	save_image("./saved_image/image_test", (char*)game.img.p_color, game.img.line_bytes * game.window.y_w);
+//	save_image("./saved_image/image_test", tab_bmp, game.img.line_bytes * game.window.y_w);
+//	save_image("./saved_image/image_test.bmp", game, game.img.line_bytes * game.window.y_w);
+dprintf(1, "i_x = %d, i_y = %d\n", game.window.x_w, game.window.y_w);
+	save_image("./saved_image/image_test.bmp", game, game.window.x_w * game.window.y_w);
+
+
+//	tab_bmp = (char*)game.img.p_color;
+//int i = -1;
+//while (++i < 100)
+
+dprintf(1, "x_w = %d\n", game.window.x_w);
+dprintf(1, "y_w = %d\n", game.window.y_w);
+ dprintf(1, "line_bytes = %d\n", game.img.line_bytes);
 	// dprintf(1, "saved image = %d\n", save_image("./saved_image/image_test", tab_bmp));
 
 	mlx_hook(game.window.window, 17, 0, ft_clean_prog, &game);
