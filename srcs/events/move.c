@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 14:22:15 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 15:51:10 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:48:57 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	move_player_straight(t_game *game, int signe)
 		game->player.p_square_x = p_square_x;
 		game->player.p_square_y = p_square_y;
 	}
-	ft_display_image(*game, game->session, game->window, game->player);
 	return (0);
 }
 
@@ -58,7 +57,6 @@ int	move_player_side(t_game *game, int signe)
 		game->player.p_square_x = p_square_x;
 		game->player.p_square_y = p_square_y;
 	}
-	ft_display_image(*game, game->session, game->window, game->player);
 	return (0);
 }
 
@@ -75,6 +73,5 @@ int	turn_player(t_game *game, int signe)
 						dir_y * cos(signe * THETA);
 	game->player.plane_x = game->player.dir_y;
 	game->player.plane_y = -1 * game->player.dir_x;
-	ft_display_image(*game, game->session, game->window, game->player);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 15:28:31 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:49:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,19 @@
 **		- tracé de la ligne verticale du mur
 */
 
-t_image	ft_display_image(t_game game, t_session t_ses,
+int	ft_display_image(t_game *g, t_session t_ses,
 		t_window t_win, t_player player)
 {
-	t_image		t_img;
 	t_ray		ray;
 	t_vector	p_square;
 	int			p;
 	int			e;
 
-	t_img.image = mlx_new_image(t_ses.id, t_win.x_w, t_win.y_w); // a fermer ?
-	t_img.p_color = (int*)mlx_get_data_addr(t_img.image, &p,
-					&t_img.line_bytes, &e);
+	mlx_destroy_image(g->session.id, g->img.image);
+	if (!(g->img.image = mlx_new_image(t_ses.id, t_win.x_w, t_win.y_w)))
+		return (-1);
+	g->img.p_color = (int*)mlx_get_data_addr(g->img.image, &p,
+					&g->img.line_bytes, &e);
 	ray.x = 0;
 	while (ray.x < t_win.x_w)
 	{
@@ -41,12 +42,12 @@ t_image	ft_display_image(t_game game, t_session t_ses,
 		ray.side = find_closest_wall(t_win, player, &p_square, &ray);
 		ray.dist_wall = get_dist_wall(player, ray, p_square);
 		t_win.z_dist[ray.x] = ray.dist_wall;
-		vertical_line_to_image(game, t_img, ray);
+		vertical_line_to_image(*g, ray);
 		ray.x++;
 	}
-	t_img = ft_display_stripes(t_ses, t_win, player, t_img);
-	mlx_put_image_to_window(t_ses.id, t_win.window, t_img.image, 0, 0);
-	return (t_img);
+	g->img = ft_display_stripes(t_ses, t_win, player, g->img);
+	mlx_put_image_to_window(t_ses.id, t_win.window, g->img.image, 0, 0);
+	return (1);
 }
 
 int		main()
@@ -64,11 +65,14 @@ int		main()
 		return (free_all_ptr(&game));
 	}
 	game.player = init_player(game.window);
-	game.window.window = mlx_new_window(game.session.id, game.window.x_w,
-					game.window.y_w, game.window.title); 				// check si ca a marché ?
-	t_img = ft_display_image(game, game.session, game.window, game.player);
-
-
+	if (!(game.window.window = mlx_new_window(game.session.id, game.window.x_w,
+					game.window.y_w, game.window.title)))
+		return (free_all_ptr(&game));
+	if (!(game.img.image = mlx_new_image(game.session.id, game.window.x_w,
+									game.window.y_w)))
+		return (free_all_ptr(&game));
+	if (ft_display_image(&game, game.session, game.window, game.player) == -1)
+		return (free_all_ptr(&game));
 
 	// char *tab_bmp;
 	// int	e;
@@ -83,6 +87,5 @@ int		main()
 	mlx_hook(game.window.window, 3, 0, &ft_key_release, &game);
 	mlx_loop_hook(game.session.id, &ft_move_player, &game);
 	mlx_loop(game.session.id);
-
-	//	mlx_clear_win_ptr(mlx_ptr, win_ptr);
+	return (0);
 }

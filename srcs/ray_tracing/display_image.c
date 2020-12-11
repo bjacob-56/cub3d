@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:21:16 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 15:07:20 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:37:46 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_image	get_correct_wall(t_session t_ses, t_ray ray)
 	return (t_img);
 }
 
-void	vertical_line_to_image(t_game game, t_image t_img_new, t_ray ray)
+void	vertical_line_to_image(t_game game, t_ray ray)
 {
 	t_image			t_img_src;
 	int				x_texture_coord;
@@ -43,9 +43,9 @@ void	vertical_line_to_image(t_game game, t_image t_img_new, t_ray ray)
 	t_img_src = get_correct_wall(game.session, ray);
 	pix.x_img = get_x_texture_coord(game.player, ray, t_img_src);
 	pix.x_coord = ray.x;
-	ft_put_ceiling_to_image(game.window, t_img_src, &pix, t_img_new);
-	ft_put_line_to_image(game.window, t_img_src, &pix, t_img_new);
-	ft_put_floor_to_image(game.window, t_img_src, &pix, t_img_new);
+	ft_put_ceiling_to_image(game.window, t_img_src, &pix, game.img);
+	ft_put_line_to_image(game.window, t_img_src, &pix, game.img);
+	ft_put_floor_to_image(game.window, t_img_src, &pix, game.img);
 }
 
 void	ft_put_line_to_image(t_window t_win, t_image t_img_src,

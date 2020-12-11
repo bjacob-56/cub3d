@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:48:26 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 15:28:11 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:48:28 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int		ft_move_player(t_game *game)
 		move_player_side(game, -1);
 	if (game->player.move.side_right == 1)
 		move_player_side(game, 1);
-	ft_display_image(*game, game->session, game->window, game->player);
+	if (ft_display_image(game, game->session, game->window,
+		game->player) == -1)
+		return (free_all_ptr(game));
 	return (0);
 }

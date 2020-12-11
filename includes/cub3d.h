@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 14:54:19 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:46:32 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ typedef struct s_game
 	t_window	window;
 	t_player	player;
 	t_list		*ptrs;
+	t_image		img;
 }				t_game;
 
 /*
@@ -191,7 +192,7 @@ typedef struct s_game
 /*
 ** ft_cub3d.c
 */
-t_image		ft_display_image(t_game game, t_session t_ses, t_window t_win, t_player player);
+int		ft_display_image(t_game *g, t_session t_ses, t_window t_win, t_player player);
 
 /*
 ** ft_init.c
@@ -273,7 +274,7 @@ int			get_x_texture_coord(t_player player, t_ray ray, t_image t_img);
 ** ft_display_image.c
 */
 t_image		get_correct_wall(t_session t_ses, t_ray ray);
-void		vertical_line_to_image(t_game game, t_image t_img_new, t_ray ray);
+void		vertical_line_to_image(t_game game, t_ray ray);
 void		ft_put_line_to_image(t_window t_win,
 			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
 void		ft_put_ceiling_to_image(t_window t_win,
