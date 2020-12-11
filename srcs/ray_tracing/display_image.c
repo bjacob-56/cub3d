@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:21:16 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:50:58 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:07:20 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ t_image	get_correct_wall(t_session t_ses, t_ray ray)
 	else
 	{
 		if (ray.step.y > 0)
-			t_img = t_ses.images.we;
-		else
 			t_img = t_ses.images.ea;
+		else
+			t_img = t_ses.images.we;
 	}
 	return (t_img);
 }
@@ -39,7 +39,7 @@ void	vertical_line_to_image(t_game game, t_image t_img_new, t_ray ray)
 	int				x_texture_coord;
 	t_pixel_info	pix;
 
-	pix.line_height = (int)(LINE_HEIGHT_STD / ray.dist_wall);
+	pix.line_height = (int)(LINE_HEIGHT_STD / ray.dist_wall); // LINE_HEIGHT ou t_win.x_w ??
 	t_img_src = get_correct_wall(game.session, ray);
 	pix.x_img = get_x_texture_coord(game.player, ray, t_img_src);
 	pix.x_coord = ray.x;
@@ -83,9 +83,9 @@ void	ft_put_ceiling_to_image(t_window t_win, t_image t_img_src,
 			t_win.map_info.c_colors[2];
 	y_limit = ft_max((t_win.y_w - pix->line_height) / 2, 0);
 	pix->y_coord = 0;
-	while (pix->y_coord < y_limit) // a ajuster ?
+	while (pix->y_coord < y_limit)
 	{
-		t_img_new.p_color[pix->x_coord + t_win.x_w *pix->y_coord] = color; // pas sur
+		t_img_new.p_color[pix->x_coord + t_win.x_w * pix->y_coord] = color;
 		pix->y_coord++;
 	}
 }
@@ -100,9 +100,9 @@ void	ft_put_floor_to_image(t_window t_win,
 			16 * 16 * t_win.map_info.f_colors[1] +
 			t_win.map_info.f_colors[2];
 	y_limit = t_win.y_w;
-	while (pix->y_coord < y_limit) // a ajuster ?
+	while (pix->y_coord < y_limit)
 	{
-		t_img_new.p_color[pix->x_coord + t_win.x_w * pix->y_coord] = color; // pas sur
+		t_img_new.p_color[pix->x_coord + t_win.x_w * pix->y_coord] = color;
 		pix->y_coord++;
 	}
 }

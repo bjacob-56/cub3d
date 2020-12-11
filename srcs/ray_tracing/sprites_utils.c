@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 12:47:33 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 17:56:42 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:23:49 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ t_sprite_info	get_sprite_info(t_window t_win, t_player player, int i)
 						player.dir_x * s_info.spritey);
 	s_info.transf_y = s_info.inv_d * (player.plane_x * s_info.spritey -
 						player.plane_y * s_info.spritex);
+	if (fabs(s_info.transf_y) < 0.2 && s_info.transf_y >= 0)
+		s_info.transf_y = 0.2;
+	if (fabs(s_info.transf_y) < 0.2 && s_info.transf_y < 0)
+		s_info.transf_y = -0.2;
 	s_info.screen_x = (int)(t_win.x_w * (1 +
 						s_info.transf_x / s_info.transf_y));
 	s_info.height = abs((int)(t_win.y_w / s_info.transf_y));
@@ -92,6 +96,6 @@ int				get_sprite_color(t_image t_img_s, t_sprite_info s_info,
 	tex_y = ((d * t_img_s.y_i) / s_info.height) / 256;
 	tex_x = (int)(256 * (j - s_info.draw_startx) *
 			t_img_s.x_i / s_info.width) / 256;
-	color = t_img_s.p_color[t_img_s.line_bytes * tex_y / 4 + tex_x];
+	color = t_img_s.p_color[t_img_s.line_bytes * tex_y / 4 + tex_x]; // a corriger
 	return (color);
 }

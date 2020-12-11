@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:13:25 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:53:03 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:02:21 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		find_closest_wall(t_window t_win, t_player player,
 			(*p_square).y += (*ray).step.y;
 			side = 1;
 		}
-		if (t_win.map[(int)(*p_square).x][(int)(*p_square).y] == 1) // attention a ne pas depasser la limite
+		if (t_win.map[(int)(*p_square).x][(int)(*p_square).y] == 1)
 			hit = 1;
 	}
 	return (side);
@@ -92,7 +92,7 @@ double	get_dist_wall(t_player player, t_ray ray, t_vector p_square)
 {
 	if (!ray.side)
 		return ((p_square.x - player.pos_x +
-			(1 - ray.step.x) / 2) / ray.dir.x); // a voir si suffisant pour texture
+			(1 - ray.step.x) / 2) / ray.dir.x);
 	else
 		return ((p_square.y - player.pos_y +
 			(1 - ray.step.y) / 2) / ray.dir.y);
@@ -110,6 +110,6 @@ int		get_x_texture_coord(t_player player, t_ray ray, t_image t_img)
 	texture_x -= floor(texture_x);
 	if ((!ray.side && ray.step.x > 0) || (ray.side && ray.step.y < 0)) // magie magie
 		texture_x = 1 - texture_x;
-	texture_coord = (int)(t_img.x_i * texture_x); 				// a voir s'il faut inverser si ray.step < 0
+	texture_coord = (int)(t_img.x_i * texture_x);
 	return (texture_coord);
 }

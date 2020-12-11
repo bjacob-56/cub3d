@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 08:40:20 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 13:35:05 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 14:53:57 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,35 @@ void	*malloc_lst(t_game *game, int size)
 	return (ptr);
 }
 
+int		malloc_trim_lst(t_game *game, char *s1, char c)
+{
+	char	*ptr;
+	t_list	*elem;
+
+	if ((c == 'N' && game->window.map_info.path_no) ||
+		 (c == 'S' && game->window.map_info.path_so) ||
+		 (c == 'E' && game->window.map_info.path_ea) ||
+		 (c == 'W' && game->window.map_info.path_we) ||
+		 (c == 's' && game->window.map_info.path_sprite))
+		 return (-1);
+	if (!(ptr = ft_strtrim(s1, " ")))
+		return (-1);
+	if (!(elem = ft_lstnew(ptr)))
+		return (free_error(ptr));
+	ft_lstadd_back(&game->ptrs, elem);
+	if (c == 'N')
+		game->window.map_info.path_no = ptr;
+	if (c == 'S')
+		game->window.map_info.path_so = ptr;
+	if (c == 'E')
+		game->window.map_info.path_ea = ptr;
+	if (c == 'W')
+		game->window.map_info.path_we = ptr;
+	if (c == 's')
+		game->window.map_info.path_sprite = ptr;
+	return (1);
+}
+
 int		free_all_ptr(t_game *game)
 {
 	ft_lstclear(&game->ptrs, free);
@@ -42,36 +71,4 @@ int		free_line(char **line)
 		*line = NULL;
 	}
 	return (-1);
-}
-
-char		*malloc_trim_lst(t_game *game, char *s1)
-{
-	int		s_len;
-	int		i;
-	int		j;
-	char	*res;
-	t_list	*elem;
-
-	if (!s1)
-		return (NULL);
-	s_len = ft_strlen(s1);
-	i = 0;
-	while (s1[i] && s1[i] == ' ')
-		i++;
-	s_len = s_len - 1;
-	while (s_len > i && s1[s_len] == ' ')
-		s_len--;
-	if (!(res = malloc(sizeof(char) * (s_len - i + 2))))
-		return (NULL);
-	j = 0;
-	while (i <= s_len)
-		res[j++] = s1[i++];
-	res[j] = '\0';
-	if (!(elem = ft_lstnew(res)))
-	{
-		free(res);
-		return (NULL);
-	}
-	ft_lstadd_back(&game->ptrs, elem);
-	return (res);
 }

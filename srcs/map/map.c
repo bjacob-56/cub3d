@@ -67,36 +67,3 @@ void	print_player_info(t_player player)
 	printf("posx = %f\n", player.pos_x);
 	printf("posy = %f\n", player.pos_y);	
 }
-
-
-
-/*
-int main()
-{
-	char *map_file_path = "./map/map.cub";
-	t_window	t_win;
-	int		fd;
-	int		nb_read;
-	int		res_get_map;
-	int		check_map;
-
-	fd = open(map_file_path, O_RDONLY);
-	if (fd < 0)
-		return (fd);
-	nb_read = set_data_map_info(fd, &t_win.map_info);
-	if (nb_read == -1)
-		return (free_map_info_data(&t_win.map_info));
-	res_get_map = parse_map(&t_win, map_file_path, fd, nb_read);
-
-	check_map = check_map_with_propagation(t_win);
-
-	printf("\ncheck_map = %d\n", check_map);
-//	printf("nb_read = %d\n\n", nb_read);
-//	print_map_info(t_win.map_info);
-	printf("\n");
-//	printf("get_map = %d\n", res_get_map);
-//	printf("nb_lines = %d, nb_columns = %d\n", t_win.map_info.nb_lines, t_win.map_info.nb_columns);
-	print_map(t_win, t_win.map);
-	close(fd);
-}
-*/

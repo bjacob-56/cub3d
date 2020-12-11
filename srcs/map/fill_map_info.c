@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:03 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 13:37:55 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 14:50:58 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,60 +26,22 @@ void	init_map_info(t_map_info *map_info)
 	map_info->c_colors[0] = -1;
 }
 
-int		free_map_info_data(t_map_info *map_info)
-{
-	if (map_info->path_no)
-		free(map_info->path_no);
-	if (map_info->path_so)
-		free(map_info->path_so);
-	if (map_info->path_ea)
-		free(map_info->path_ea);
-	if (map_info->path_we)
-		free(map_info->path_we);
-	if (map_info->path_sprite)
-		free(map_info->path_sprite);
-	return (-1);
-}
-
-char	*trim_images_path(t_game *g, char *line)
-{
-	char *path;
-
-//	path = ft_strtrim(line + 3, " ");
-	path = malloc_trim_lst(g, line);
-	return (path);
-}
-
 int	get_images_path(t_game *g, char *line)
 {
+	int res;
+
+	res = 0;
 	if (!ft_strncmp(line, "NO ", 3))
-	{
-		if (!(g->window.map_info.path_no = trim_images_path(g, line + 3))) // mallocs a gerer et proteger
-			return (-1);
-	}
+		res = malloc_trim_lst(g, line + 3, 'N');
 	else if (!ft_strncmp(line, "SO ", 3))
-	{
-		if (!(g->window.map_info.path_so = trim_images_path(g, line + 3))) // mallocs a gerer et proteger
-			return (-1);
-	}
-	else if (!ft_strncmp(line, "WE ", 3))
-	{
-		if (!(g->window.map_info.path_we = trim_images_path(g, line + 3))) // mallocs a gerer et proteger
-			return (-1);
-	}
+		res = malloc_trim_lst(g, line + 3, 'S');
 	else if (!ft_strncmp(line, "EA ", 3))
-	{
-		if (!(g->window.map_info.path_ea = trim_images_path(g, line + 3))) // mallocs a gerer et proteger
-			return (-1);
-	}
+		res = malloc_trim_lst(g, line + 3, 'E');
+	else if (!ft_strncmp(line, "WE ", 3))
+		res = malloc_trim_lst(g, line + 3, 'W');
 	else if (!ft_strncmp(line, "S ", 2))
-	{
-		if (!(g->window.map_info.path_sprite = trim_images_path(g, line + 2))) // mallocs a gerer et proteger
-			return (-1);
-	}
-	else
-		return (0);
-	return (1);
+		res = malloc_trim_lst(g, line + 2, 's');
+	return (res);
 }
 
 int	get_floor_ceiling_color(t_game *g, char *line)
@@ -99,10 +61,9 @@ int		fill_map_info(char *line, t_game *g)
 	res = 0;
 	if (!line[0])
 		return (0);
-	res += get_map_resolution(g, line); // OK
+	res += get_map_resolution(g, line);
 	res += get_images_path(g, line);
-	res += get_floor_ceiling_color(g, line); // OK
-	
+	res += get_floor_ceiling_color(g, line);
 	return (res);
 }
 
@@ -130,15 +91,4 @@ int		set_data_map_info(int fd, t_game *g, int nb_read,
 	if (nb_param != 8)
 		nb_read = -1;
 	return (nb_read);
-}
-
-int		**free_all_lines_and_map(int ***tab, int i_tab)
-{
-	int	i;
-
-	i = 0;
-	while (i < i_tab)
-		free((*tab)[i++]);
-	free(*tab);
-	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 13:34:57 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 14:54:19 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,11 +207,9 @@ t_image		open_image(void *mlx_ptr, char *img_path,
 ** clear_objects.c
 */
 void	*malloc_lst(t_game *game, int size);
+int		malloc_trim_lst(t_game *game, char *s1, char c);
 int		free_all_ptr(t_game *game);
 int		free_line(char **line);
-char		*malloc_trim_lst(t_game *game, char *s1);
-
-
 
 /*
 ** -----------------------------     MAP     ----------------------------- **
@@ -231,11 +229,11 @@ int			ft_reopen(int fd, char *map_file_path);
 ** ft_fill_map_info.c
 */
 void		init_map_info(t_map_info *map_info);
-int			free_map_info_data(t_map_info *map_info);
+int	get_images_path(t_game *g, char *line);
+int	get_floor_ceiling_color(t_game *g, char *line);
 int		fill_map_info(char *line, t_game *g);
 int		set_data_map_info(int fd, t_game *g, int nb_read,
 						int nb_param);
-//int			**free_all_lines_and_map(int ***tab, int i_tab);
 
 /*
 ** ft_parse_map.c

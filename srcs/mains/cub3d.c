@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 11:58:34 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:28:31 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_image	ft_display_image(t_game game, t_session t_ses,
 	int			p;
 	int			e;
 
-	t_img.image = mlx_new_image(t_ses.id, t_win.x_w, t_win.y_w);
+	t_img.image = mlx_new_image(t_ses.id, t_win.x_w, t_win.y_w); // a fermer ?
 	t_img.p_color = (int*)mlx_get_data_addr(t_img.image, &p,
 					&t_img.line_bytes, &e);
 	ray.x = 0;
@@ -58,11 +58,14 @@ int		main()
 //	double		oldTime;
 
 	game.session = init_session();
-	if (init_window(&game, "map/map.cub", "Fenetre_1") == -1) // si erreur -> -1 ----> A GERER     prendre decision pour free_map_info_data
-		return (-1);
+	if (init_window(&game, "map/map.cub", "Fenetre_1") == -1)
+	{
+		dprintf(1, "Error init\n");
+		return (free_all_ptr(&game));
+	}
 	game.player = init_player(game.window);
 	game.window.window = mlx_new_window(game.session.id, game.window.x_w,
-					game.window.y_w, game.window.title); // check si ca a marché ?
+					game.window.y_w, game.window.title); 				// check si ca a marché ?
 	t_img = ft_display_image(game, game.session, game.window, game.player);
 
 
@@ -74,8 +77,6 @@ int		main()
 	// 				&t_img.line_bytes, &e);
 	// dprintf(1, "tab : %s\n", tab_bmp);
 	// dprintf(1, "saved image = %d\n", save_image("./saved_image/image_test", tab_bmp));
-
-//	free(game.window.map);
 
 	mlx_hook(game.window.window, 17, 0, ft_clean_prog, &game);
 	mlx_hook(game.window.window, 2, 0, &ft_key_press, &game);

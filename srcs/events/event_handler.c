@@ -6,34 +6,20 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:48:26 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 17:03:44 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:28:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-/*
-static int	close_window(t_game *game) // window a fermer   DestroyNotify
-{
-	exit(0);
-	return (0);
-}
-*/
-
 int		ft_clean_prog(t_game *game)
 {
 	dprintf(1, "C'est fini\n");
+	free_all_ptr(game);
 	mlx_destroy_window(game->session.id, game->window.window);
-
 	exit(0);
 	return (0);
 }
-
-
-
-
-
-
 
 int	ft_key_press(int key, t_game *game)
 {

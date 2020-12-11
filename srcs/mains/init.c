@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 13:24:50 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 14:46:15 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ int			init_window(t_game *g, char *map_file_path, char *title)
 		return (-1);
 	nb_read = set_data_map_info(fd, g, 0, 0);
 	if (nb_read == -1)
-	{
-		free_map_info_data(&g->window.map_info); // a gerer ici ?? A VOIR
 		return (-1);
-	}
 	res_x = g->window.map_info.resolution_x;
 	res_y = g->window.map_info.resolution_y;
 	if (parse_map(g, map_file_path, fd, nb_read) == -1 ||

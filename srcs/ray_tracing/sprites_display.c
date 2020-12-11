@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:17:21 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/10 14:53:55 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 15:17:00 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_image	ft_display_stripes(t_session t_ses, t_window t_win,
 	sort_sprites(t_win.map_info.sprites, t_win.map_info.nb_sprites, player);
 	while (i < t_win.map_info.nb_sprites)
 	{
-		if (!(fabs(t_win.map_info.sprites[i].x - player.pos_x) < 0.02 &&
-			fabs(t_win.map_info.sprites[i].y - player.pos_y) < 0.02))
+		if (!(fabs(t_win.map_info.sprites[i].x - player.pos_x) < 0.2 &&
+			fabs(t_win.map_info.sprites[i].y - player.pos_y) < 0.2))
 		{
 			s_info = get_sprite_info(t_win, player, i);
 			ft_put_sprite_line_to_image(t_win, t_img, t_img_s, s_info);
