@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 14:46:15 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 16:23:59 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ int			init_window(t_game *g, char *map_file_path, char *title)
 		check_map_with_propagation(g, &g->window) == -1)
 			return (-1);
 	g->window.title = title;
-	g->window.x_w = ft_min(g->window.map_info.resolution_x, X_RES_SCREEN);
-	g->window.y_w = ft_min(g->window.map_info.resolution_y, Y_RES_SCREEN);
+	if ((g->window.x_w = ft_min(g->window.map_info.resolution_x, X_RES_SCREEN))
+		<= 0 ||
+		(g->window.y_w = ft_min(g->window.map_info.resolution_y, Y_RES_SCREEN))
+		<= 0)
+		return (-1);
 	if (!(g->window.z_dist = malloc_lst(g, sizeof(double) * g->window.x_w)))
 		return (-1);
 	return (1);

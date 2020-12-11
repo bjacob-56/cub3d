@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 15:46:32 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 16:29:15 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # include "../minilibx_mms_20200219/mlx.h"
 
-# define LINE_HEIGHT_STD 800 // a ajuster ?
+# define HEIGHT_FACTOR 1.3 // a ajuster ?
 
 # define FOV 0.66 // a verifier
 # define W 13

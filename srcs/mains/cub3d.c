@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 15:49:35 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 16:34:02 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		main()
 //	double		oldTime;
 
 	game.session = init_session();
-	if (init_window(&game, "map/map.cub", "Fenetre_1") == -1)
+	if (init_window(&game, "map/map2.cub", "Fenetre_1") == -1)
 	{
 		dprintf(1, "Error init\n");
 		return (free_all_ptr(&game));
