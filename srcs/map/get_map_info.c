@@ -6,25 +6,30 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:58 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 09:54:44 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/11 13:27:02 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	get_map_resolution(t_map_info *map_info, char *line_bis)
+int	get_map_resolution(t_game *g, char *line_bis)
 {
+	if (ft_strncmp(line_bis, "R ", 2))
+		return (0);
+	if (g->window.map_info.resolution_x != -1)
+		return (-1);
+	line_bis = line_bis + 2;
 	while (*line_bis == ' ')
 		line_bis++;
-	map_info->resolution_x = 0;
+	g->window.map_info.resolution_x = 0;
 	while (ft_isdigit(*line_bis))
-		map_info->resolution_x = 10 * map_info->resolution_x
+		g->window.map_info.resolution_x = 10 * g->window.map_info.resolution_x
 		+ (*(line_bis++) - '0');
 	while (*line_bis == ' ')
 		line_bis++;
-	map_info->resolution_y = 0;
+	g->window.map_info.resolution_y = 0;
 	while (ft_isdigit(*line_bis))
-		map_info->resolution_y = 10 * map_info->resolution_y
+		g->window.map_info.resolution_y = 10 * g->window.map_info.resolution_y
 		+ (*(line_bis++) - '0');
 	while (*line_bis == ' ')
 		line_bis++;
@@ -38,6 +43,8 @@ int	get_map_floor(t_map_info *map_info, char *line_bis)
 	int	i;
 
 	i = 0;
+	if (map_info->f_colors[0] != -1)
+		return (-1);
 	while (i < 3)
 	{
 		while (*line_bis == ' ')
@@ -66,6 +73,8 @@ int	get_map_ceiling(t_map_info *map_info, char *line_bis)
 	int i;
 
 	i = 0;
+	if (map_info->c_colors[0] != -1)
+		return (-1);
 	while (i < 3)
 	{
 		while (*line_bis == ' ')
