@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:58 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 13:27:02 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 13:16:40 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	get_nb_lines_columns_sprites(t_window *t_win, int fd,
 	int	c_max;
 	int j;
 
-	free_line(line);
+	free_line(line, -1);
 	t_win->map_info.nb_sprites = 0;
 	t_win->map_info.nb_columns = 0;
 	t_win->map_info.nb_lines = 0;
@@ -117,10 +117,10 @@ int	get_nb_lines_columns_sprites(t_window *t_win, int fd,
 				t_win->map_info.nb_sprites++;
 		t_win->map_info.nb_columns = c_max;
 		t_win->map_info.nb_lines++;
-		free_line(line);
+		free_line(line, -1);
 		size = get_next_line(fd, line);
 	}
-	free_line(line);
+	free_line(line, -1);
 	return (size);
 }
 

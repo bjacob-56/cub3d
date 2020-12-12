@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:29:50 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 11:51:20 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 13:03:44 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,43 +64,42 @@ int		check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j)
 		if (t_win->map_info.start.line != -1)
 		{
 			t_win->map_info.is_valid = -1;
-			return (-1);
+			return (-10);
 		}
 		set_start_map(t_win, i, j, line);
 	}
 	else if (line[j] == ' ')
 		t_win->map[i][j] = -1;
 	else
-		return (-1);
+		return (-11);
 	return (1);
 }
 
 int		fill_tab_map(t_game *g, int fd, int i, char **line)
 {
 	int		j;
-	int		len_line;
 	int		size;
+	int		err;
 
 	if (!(g->window.map_info.sprites =
 		malloc_lst(g, sizeof(t_sprite) * g->window.map_info.nb_sprites)))
-		return (-1);
+		return (-8);
 	g->window.map_info.nb_sprites = 0;
 	size = get_next_line(fd, line);
 	while (size > 0 && i < g->window.map_info.nb_lines)
 	{
-		len_line = ft_strlen(*line);
 		j = -1;
-		while (++j < len_line)
-			if (check_and_fill_cell_i_j(&g->window, *line, i, j) == -1)
-				return (-1);
+		while (++j < ft_strlen(*line))
+			if ((err = check_and_fill_cell_i_j(&g->window, *line, i, j)) < 0)
+				return (err);
 		while (j < g->window.map_info.nb_columns)
 			g->window.map[i][j++] = -1;
-		free_line(line);
+		free_line(line, -1);
 		size = get_next_line(fd, line);
 		i++;
 	}
 	if (i != g->window.map_info.nb_lines)
-		return (free_line(line));
+		return (free_line(line, -6)); // free_line a modifier
 	return (1);
 }
 
@@ -108,24 +107,25 @@ int		parse_map(t_game *g, char *map_file_path, int fd, int nb_read)
 {
 	int		size;
 	char	*line;
+	int		err;
 
 	line = NULL;
 	size = get_next_line(fd, &line);
 	while (size > 0 && line[0])
 	{
-		free_line(&line);
+		free_line(&line, -1);
 		size = get_next_line(fd, &line);
 		nb_read++;
 	}
-	if (size < 0 ||
-		(size = get_nb_lines_columns_sprites(&g->window, fd, size, &line))
-			== -1 || !(g->window.map = ft_malloc_tab_2d(g)) ||
-			(fd = ft_reopen(fd, map_file_path)) == -1)
-		return (free_line(&line)); // -1 a gerer derriere
+	if (size < 0 ||	(size = get_nb_lines_columns_sprites(&g->window, fd, size,
+		&line))	== -1 || (fd = ft_reopen(fd, map_file_path)) == -1)
+			return (free_line(&line, -6));
+	if (!(g->window.map = ft_malloc_tab_2d(g)))
+		return (-8);
 	if (go_to_nb_read(fd, &line, nb_read) == -1)
-		return (-1);
-	if (fill_tab_map(g, fd, 0, &line) == -1)
-		return (-1);
+		return (-6);
+	if ((err = fill_tab_map(g, fd, 0, &line)) < 0)
+		return (err);
 	close(fd);
 	return (1);
 }

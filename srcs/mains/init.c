@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 16:23:59 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 13:19:52 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,26 @@ int			init_window(t_game *g, char *map_file_path, char *title)
 	int			nb_read;
 	int			res_x;
 	int			res_y;
+	int			err;
 
 	fd = open(map_file_path, O_RDONLY);
 	if (fd < 0)
-		return (-1);
+		return (-6);
 	nb_read = set_data_map_info(fd, g, 0, 0);
-	if (nb_read == -1)
-		return (-1);
+	if (nb_read < 0)
+		return (nb_read);
 	res_x = g->window.map_info.resolution_x;
 	res_y = g->window.map_info.resolution_y;
-	if (parse_map(g, map_file_path, fd, nb_read) == -1 ||
-		check_map_with_propagation(g, &g->window) == -1)
-			return (-1);
+	if ((err = parse_map(g, map_file_path, fd, nb_read)) < 0 ||
+		(err = check_map_with_propagation(g, &g->window)) < 0)
+			return (err);
 	g->window.title = title;
 	if ((g->window.x_w = ft_min(g->window.map_info.resolution_x, X_RES_SCREEN))
-		<= 0 ||
-		(g->window.y_w = ft_min(g->window.map_info.resolution_y, Y_RES_SCREEN))
-		<= 0)
-		return (-1);
+		<= 0 ||	(g->window.y_w = ft_min(g->window.map_info.resolution_y,
+		Y_RES_SCREEN)) <= 0)
+		return (-7);
 	if (!(g->window.z_dist = malloc_lst(g, sizeof(double) * g->window.x_w)))
-		return (-1);
+		return (-8);
 	return (1);
 }
 
@@ -71,7 +71,7 @@ t_player	init_player(t_window t_win)
 
 	player.dir_x = 0;
 	player.dir_y = 0;
-	if (t_win.map_info.start.direction == 'N') // pas sur, a confirmer
+	if (t_win.map_info.start.direction == 'N')
 		player.dir_x = FOV * -1;
 	if (t_win.map_info.start.direction == 'S')
 		player.dir_x = FOV * 1;

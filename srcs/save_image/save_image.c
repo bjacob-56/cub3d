@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 17:21:50 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 09:50:33 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 13:24:20 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,24 @@ void	fill_file_body(int fd, t_game game)
 	}
 }
 
-int		save_image(char *name, t_game game, int len)
+int		save_image(char *name, t_game game)
 {
 	int		fd;
 	char	*path;
+	int		len;
 
+	len = game.window.x_w * game.window.y_w;
 	if (!(path = ft_strjoin("./saved_image/", name)))
-		return (-1);
-//	path = name;
-//	dprintf(1, "... %s\n", path);
+		return (ft_error(-3, &game));
+	if (ft_display_image(&game, game.window, game.player, 1) < 0)
+		return (ft_error(-3, &game));
 	fd = open(path, O_CREAT | O_TRUNC | O_RDWR, 0777);
 	if (fd == -1)
-		return (-1);
+		return (ft_error(-3, &game));
 	fill_file_header(fd, game);
 	fill_file_info(fd, game);
 	fill_file_body(fd, game);
 	free(path);
+	free_all_ptr(&game);
 	return (1);
 }

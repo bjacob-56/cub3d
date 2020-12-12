@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:03 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 14:50:58 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 13:19:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ int		set_data_map_info(int fd, t_game *g, int nb_read,
 	{
 		nb_read++;
 		res = fill_map_info(line, g);
-		if (res == -1)
-			return (free_error(line));
+		if (res < 0)
+			return (free_line(&line, res));
 		nb_param += res;
-		free_line(&line);
+		free_line(&line, -1);
 	}
-	free_line(&line);
+	free_line(&line, -1);
 	g->window.map_info.nb_sprites = 0;
 	if (nb_param != 8)
-		nb_read = -1;
+		nb_read = -12;
 	return (nb_read);
 }

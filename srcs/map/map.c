@@ -3,9 +3,9 @@
 /*
 
 next steps :
-	- ajout --save
 	- gestion d'erreur
 	- gerer fps ?
+	- optimisation sprites
 */
 
 

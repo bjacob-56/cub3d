@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 09:28:52 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 12:53:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ typedef struct s_game
 /*
 ** ft_cub3d.c
 */
-int		ft_display_image(t_game *g, t_session t_ses, t_window t_win, t_player player);
+int		ft_display_image(t_game *g, t_window t_win, t_player player, int save);
 
 /*
 ** ft_init.c
@@ -211,7 +211,11 @@ t_image		open_image(void *mlx_ptr, char *img_path,
 void	*malloc_lst(t_game *game, int size);
 int		malloc_trim_lst(t_game *game, char *s1, char c);
 int		free_all_ptr(t_game *game);
-int		free_line(char **line);
+int		free_line(char **line, int err);
+
+
+int		ft_error(int err, t_game *game);
+
 
 /*
 ** -----------------------------     MAP     ----------------------------- **
@@ -254,7 +258,7 @@ int		**copy_map_to_map_bis(t_game *game, t_window t_win);
 void		check_next_point(t_window *t_win, int **map_bis, int i, int j);
 int		check_map_with_propagation(t_game *game, t_window *t_win);
 int		go_to_nb_read(int fd, char **line, int nb_read);
-
+int		check_map_extension(char *map_path);
 
 /*
 ** -----------------------------     RAY TRACING     ----------------------------- **
@@ -324,7 +328,7 @@ int	turn_player(t_game *game, int signe);
 /*
 ** save_image.c
 */
-int	save_image(char *path, t_game game, int len);
+int	save_image(char *path, t_game game);
 
 /*
 ** -----------------------------     MATHS     ----------------------------- **
