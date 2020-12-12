@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 08:40:20 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 15:39:48 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 16:36:07 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ void	*malloc_lst(t_game *game, int size)
 	}
 	ft_lstadd_back(&game->ptrs, elem);
 	return (ptr);
-}
-
-static int	free_error_int(char *ptr, int err)
-{
-	free_error(ptr);
-	return (err);
 }
 
 int		malloc_trim_lst(t_game *game, char *s1, char c)

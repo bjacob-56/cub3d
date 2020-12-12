@@ -3,9 +3,9 @@
 /*
 
 next steps :
-	- gestion d'erreur
 	- gerer fps ?
 	- optimisation sprites
+	- check des leaks
 */
 
 

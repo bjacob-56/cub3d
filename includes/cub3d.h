@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 16:07:30 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 16:36:05 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ void		clear_session_images(t_game *game);
 */
 int		ft_error(int err, t_game *game);
 int			ft_main_error(void);
+int	free_error_int(char *ptr, int err);
 int			ft_close_file(int fd, int err);
 
 /*
