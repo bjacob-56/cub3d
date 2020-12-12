@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 12:47:33 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 16:41:16 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 14:09:15 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void			sort_sprites(t_sprite *tab, int nb_sprites, t_player p)
 	int		i;
 	int		j;
 	double	sprite_dist[nb_sprites];
-	double	temp;
 
 	i = -1;
 	while (++i < nb_sprites)

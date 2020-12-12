@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 12:53:11 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 14:08:29 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,9 +213,11 @@ int		malloc_trim_lst(t_game *game, char *s1, char c);
 int		free_all_ptr(t_game *game);
 int		free_line(char **line, int err);
 
-
+/*
+** errors.c
+*/
 int		ft_error(int err, t_game *game);
-
+int			ft_main_error(void);
 
 /*
 ** -----------------------------     MAP     ----------------------------- **
@@ -282,10 +284,10 @@ t_image		get_correct_wall(t_session t_ses, t_ray ray);
 void		vertical_line_to_image(t_game game, t_ray ray);
 void		ft_put_line_to_image(t_window t_win,
 			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
-void		ft_put_ceiling_to_image(t_window t_win,
-			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
-void		ft_put_floor_to_image(t_window t_win,
-			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
+void		ft_put_ceiling_to_image(t_window t_win, t_pixel_info *pix,
+									t_image t_img_new);
+void		ft_put_floor_to_image(t_window t_win, t_pixel_info *pix,
+								t_image t_img_new);
 
 /*
 ** sprites_utils.c

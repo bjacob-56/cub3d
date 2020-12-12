@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:21:16 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 16:26:51 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 14:08:54 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_image	get_correct_wall(t_session t_ses, t_ray ray)
 void	vertical_line_to_image(t_game game, t_ray ray)
 {
 	t_image			t_img_src;
-	int				x_texture_coord;
 	t_pixel_info	pix;
 
 //	pix.line_height = (int)(LINE_HEIGHT_STD / ray.dist_wall); // LINE_HEIGHT ou t_win.x_w ??
@@ -44,9 +43,9 @@ void	vertical_line_to_image(t_game game, t_ray ray)
 	t_img_src = get_correct_wall(game.session, ray);
 	pix.x_img = get_x_texture_coord(game.player, ray, t_img_src);
 	pix.x_coord = ray.x;
-	ft_put_ceiling_to_image(game.window, t_img_src, &pix, game.img);
+	ft_put_ceiling_to_image(game.window, &pix, game.img);
 	ft_put_line_to_image(game.window, t_img_src, &pix, game.img);
-	ft_put_floor_to_image(game.window, t_img_src, &pix, game.img);
+	ft_put_floor_to_image(game.window, &pix, game.img);
 }
 
 void	ft_put_line_to_image(t_window t_win, t_image t_img_src,
@@ -73,8 +72,8 @@ void	ft_put_line_to_image(t_window t_win, t_image t_img_src,
 	}
 }
 
-void	ft_put_ceiling_to_image(t_window t_win, t_image t_img_src,
-		t_pixel_info *pix, t_image t_img_new)
+void	ft_put_ceiling_to_image(t_window t_win, t_pixel_info *pix,
+								t_image t_img_new)
 {
 	int		y_limit;
 	int		color;
@@ -92,8 +91,8 @@ void	ft_put_ceiling_to_image(t_window t_win, t_image t_img_src,
 	}
 }
 
-void	ft_put_floor_to_image(t_window t_win,
-		t_image t_img_src, t_pixel_info *pix, t_image t_img_new)
+void	ft_put_floor_to_image(t_window t_win, t_pixel_info *pix,
+							t_image t_img_new)
 {
 	int		y_limit;
 	int		color;

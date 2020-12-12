@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 13:21:34 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 14:09:28 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,8 @@ int		ft_cub3d(int save, char *map_path)
 
 int		main(int argc, char **argv)
 {
-	char *map_path;
-
 	if (argc < 2 || argc > 3)
-		return (-1); // erreur a gerer
+		return (ft_main_error()); // erreur a gerer
 	else if (argc == 2)
 		ft_cub3d(0, argv[1]);
 	else
@@ -100,7 +98,7 @@ int		main(int argc, char **argv)
 		if (!ft_strncmp("--save", argv[1], 7))
 			ft_cub3d(1, argv[2]);
 		else
-			return (-1); // erreur a gerer
+			return (ft_main_error()); // erreur a gerer
 	}
 	return (0);
 }

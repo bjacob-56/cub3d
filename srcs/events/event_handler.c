@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:48:26 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 12:32:12 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 14:02:22 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_clean_prog(t_game *game) // a verifier
 {
-	dprintf(1, "C'est fini\n");
+	dprintf(1, "Cub3d over\n");
 	free_all_ptr(game);
 	mlx_destroy_window(game->session.id, game->window.window);
 	exit(0);

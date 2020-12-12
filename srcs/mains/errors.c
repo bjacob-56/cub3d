@@ -6,13 +6,13 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 12:12:24 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 13:13:51 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 14:11:46 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-char	*get_error_message(int err)
+static char	*get_error_message(int err)
 {
 	if (err == -1)
 		return ("The map is invalid\n");
@@ -41,7 +41,7 @@ char	*get_error_message(int err)
 	return ("");
 }
 
-int		ft_error(int err, t_game *game)
+int			ft_error(int err, t_game *game)
 {
 	char *message;
 	
@@ -49,5 +49,12 @@ int		ft_error(int err, t_game *game)
 	write(1, "Error\n", 6);
 	write(1, message, ft_strlen(message));
 	free_all_ptr(game);
+	return (-1);
+}
+
+int			ft_main_error(void)
+{
+	write(1, "Error\n", 6);
+	write(1, "Wrong inputs\n", 13);
 	return (-1);
 }
