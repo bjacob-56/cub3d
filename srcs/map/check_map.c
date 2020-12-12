@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:45:56 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 13:09:45 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 15:08:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	check_next_point(t_window *t_win, int **map_bis, int i, int j)
 		(j == t_win->map_info.nb_columns - 1 && map_bis[i][j] != 1))
 	{
 		t_win->map_info.is_valid = -1;
+		if (map_bis[i][j] == -1)
+			t_win->map_info.is_valid = -11;
 		return ;
 	}
 	else if (map_bis[i][j] == 1 ||
@@ -67,12 +69,12 @@ int		check_map_with_propagation(t_game *game, t_window *t_win)
 		return (-8);
 	i_start = t_win->map_info.start.column;
 	j_start = t_win->map_info.start.line;
-	if (t_win->map_info.is_valid == -1)
-		return (-1);
+	if (t_win->map_info.is_valid < 0)
+		return (t_win->map_info.is_valid);
 	check_next_point(t_win, map_bis, i_start, j_start);
 	if (t_win->map_info.is_valid == 1)
 		return (1);
-	return (-1);
+	return (t_win->map_info.is_valid);
 }
 
 int		go_to_nb_read(int fd, char **line, int nb_read)

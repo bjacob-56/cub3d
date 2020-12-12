@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:09:28 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 15:02:15 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ int		ft_cub3d(int save, char *map_path)
 
 	game.ptrs = NULL;
 	if (check_map_extension(map_path) == -1)
-		return (ft_error(-1, &game)); // a verifier
+		return (ft_error(-7, &game)); // a verifier
 	game.session = init_session();
-	if ((err = init_window(&game, map_path, "Cube3d")) < 0)
+	if ((err = init_window(&game, map_path, "Cube3d")) < 0)		
 		return (ft_error(err, &game));
 	game.player = init_player(game.window);
 	if (!(game.img.image = mlx_new_image(game.session.id, game.window.x_w,

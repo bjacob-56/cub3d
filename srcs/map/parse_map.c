@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:29:50 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 13:03:44 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 15:14:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		fill_tab_map(t_game *g, int fd, int i, char **line)
 		return (-8);
 	g->window.map_info.nb_sprites = 0;
 	size = get_next_line(fd, line);
-	while (size > 0 && i < g->window.map_info.nb_lines)
+	while (size >= 0 && i < g->window.map_info.nb_lines)
 	{
 		j = -1;
 		while (++j < ft_strlen(*line))
@@ -99,7 +99,8 @@ int		fill_tab_map(t_game *g, int fd, int i, char **line)
 		i++;
 	}
 	if (i != g->window.map_info.nb_lines)
-		return (free_line(line, -6)); // free_line a modifier
+		return (free_line(line, -6));
+	close(fd);
 	return (1);
 }
 
@@ -111,7 +112,7 @@ int		parse_map(t_game *g, char *map_file_path, int fd, int nb_read)
 
 	line = NULL;
 	size = get_next_line(fd, &line);
-	while (size > 0 && line[0])
+	while (size >= 0 && !line[0])
 	{
 		free_line(&line, -1);
 		size = get_next_line(fd, &line);
@@ -126,6 +127,7 @@ int		parse_map(t_game *g, char *map_file_path, int fd, int nb_read)
 		return (-6);
 	if ((err = fill_tab_map(g, fd, 0, &line)) < 0)
 		return (err);
-	close(fd);
+	if (g->window.map_info.start.line == -1)
+		return (-10);
 	return (1);
 }

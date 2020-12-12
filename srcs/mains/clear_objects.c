@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 08:40:20 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 13:13:38 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 14:51:29 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		malloc_trim_lst(t_game *game, char *s1, char c)
 		game->window.map_info.path_we = ptr;
 	if (c == 's')
 		game->window.map_info.path_sprite = ptr;
-	return (1);
+	return (2);
 }
 
 int		free_all_ptr(t_game *game)

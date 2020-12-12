@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:03 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 13:19:11 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 14:52:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		fill_map_info(char *line, t_game *g)
 {
 	int	res;
 
-	res = 0;
+	res = -1;
 	if (!line[0])
 		return (0);
 	res += get_map_resolution(g, line);
@@ -82,7 +82,7 @@ int		set_data_map_info(int fd, t_game *g, int nb_read,
 		nb_read++;
 		res = fill_map_info(line, g);
 		if (res < 0)
-			return (free_line(&line, res));
+			return (free_line(&line, -12));
 		nb_param += res;
 		free_line(&line, -1);
 	}
