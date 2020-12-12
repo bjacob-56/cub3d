@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:13:25 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 15:02:21 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:43:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int		get_x_texture_coord(t_player player, t_ray ray, t_image t_img)
 	else
 		texture_x = player.pos_x + ray.dist_wall * ray.dir.x;
 	texture_x -= floor(texture_x);
-	if ((!ray.side && ray.step.x > 0) || (ray.side && ray.step.y < 0)) // magie magie
+	if ((!ray.side && ray.step.x > 0) || (ray.side && ray.step.y < 0))
 		texture_x = 1 - texture_x;
 	texture_coord = (int)(t_img.x_i * texture_x);
 	return (texture_coord);

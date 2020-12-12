@@ -6,13 +6,13 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 15:43:53 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:38:06 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	init_session_images_and_ptrs(t_game *game)
+void		init_session_images_and_ptrs(t_game *game)
 {
 	game->session.images.no.image = NULL;
 	game->session.images.so.image = NULL;
@@ -20,9 +20,10 @@ void	init_session_images_and_ptrs(t_game *game)
 	game->session.images.we.image = NULL;
 	game->session.images.sprite.image = NULL;
 	game->ptrs = NULL;
+	game->window.window = NULL;
 }
 
-int	init_session(t_game *game)
+int			init_session(t_game *game)
 {
 	game->session.id = mlx_init();
 	game->session.images.no = open_image(game->session.id,
@@ -66,11 +67,11 @@ int			init_window(t_game *g, char *map_file_path, char *title)
 	res_y = g->window.map_info.resolution_y;
 	if ((err = parse_map(g, map_file_path, fd, nb_read)) < 0 ||
 		(err = check_map_with_propagation(g, &g->window)) < 0)
-			return (err);
+		return (err);
 	g->window.title = title;
-	if ((g->window.x_w = ft_min(g->window.map_info.resolution_x, X_RES_SCREEN))
-		<= 0 ||	(g->window.y_w = ft_min(g->window.map_info.resolution_y,
-		Y_RES_SCREEN)) <= 0)
+	if ((g->window.x_w = ft_min(g->window.map_info.resolution_x, X_RES))
+		<= 0 || (g->window.y_w = ft_min(g->window.map_info.resolution_y,
+		Y_RES)) <= 0)
 		return (-7);
 	if (!(g->window.z_dist = malloc_lst(g, sizeof(double) * g->window.x_w)))
 		return (-8);

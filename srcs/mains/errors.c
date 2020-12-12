@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 12:12:24 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 16:36:08 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:27:57 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ static char	*get_error_message(int err)
 
 int			ft_error(int err, t_game *game)
 {
-	char *message;
-	
+	char	*message;
+
 	message = get_error_message(err);
 	write(1, "Error\n", 6);
 	write(1, message, ft_strlen(message));
-	free_all_ptr(game);
+	ft_clean_prog(game, -1);
 	return (-1);
 }
 
@@ -59,7 +59,7 @@ int			ft_main_error(void)
 	return (-1);
 }
 
-int	free_error_int(char *ptr, int err)
+int			free_error_int(char *ptr, int err)
 {
 	free_error(ptr);
 	return (err);

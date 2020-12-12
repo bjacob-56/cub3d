@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:45:56 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 15:08:11 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:32:35 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ int		check_map_extension(char *map_path)
 		map_path[i - 4] != '.' ||
 		map_path[i - 3] != 'c' ||
 		map_path[i - 2] != 'u' ||
-		map_path[i - 1] != 'b'
-		)
+		map_path[i - 1] != 'b')
 		return (-1);
 	return (1);
 }

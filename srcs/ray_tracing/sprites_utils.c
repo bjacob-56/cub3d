@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 12:47:33 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:09:15 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:43:49 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ int				get_sprite_color(t_image t_img_s, t_sprite_info s_info,
 	tex_y = ((d * t_img_s.y_i) / s_info.height) / 256;
 	tex_x = (int)(256 * (j - s_info.draw_startx) *
 			t_img_s.x_i / s_info.width) / 256;
-	color = t_img_s.p_color[t_img_s.line_bytes * tex_y / 4 + tex_x]; // a corriger
+	color = t_img_s.p_color[t_img_s.line_bytes * tex_y / 4 + tex_x];
 	return (color);
 }

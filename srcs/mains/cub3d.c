@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 16:34:17 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:31:48 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 **		- tracé de la ligne verticale du mur
 */
 
-int	ft_display_image(t_game *g, t_window t_win, t_player player, int save)
+int			ft_display_image(t_game *g, t_window t_win, t_player player,
+							int save)
 {
 	t_ray		ray;
 	t_vector	p_square;
@@ -31,7 +32,7 @@ int	ft_display_image(t_game *g, t_window t_win, t_player player, int save)
 	if (!(g->img.image = mlx_new_image(g->session.id, t_win.x_w, t_win.y_w)))
 		return (-2);
 	g->img.p_color = (int*)mlx_get_data_addr(g->img.image, &g->img.bpp,
-					&g->img.line_bytes, &e);	
+					&g->img.line_bytes, &e);
 	ray.x = 0;
 	while (ray.x < t_win.x_w)
 	{
@@ -45,31 +46,30 @@ int	ft_display_image(t_game *g, t_window t_win, t_player player, int save)
 	}
 	g->img = ft_display_stripes(g->session, t_win, player, g->img);
 	if (!save)
-		mlx_put_image_to_window(g->session.id, t_win.window, g->img.image, 0, 0);
+		mlx_put_image_to_window(g->session.id, t_win.window, g->img.image,
+								0, 0);
 	return (1);
 }
 
-static void	launch_loop(t_game game)
+static int	launch_loop(t_game *game)
 {
-//	double		time;
-//	double		oldTime;
-
-	mlx_hook(game.window.window, 17, 0, ft_clean_prog, &game);
-	mlx_hook(game.window.window, 2, 0, &ft_key_press, &game);
-	mlx_hook(game.window.window, 3, 0, &ft_key_release, &game);
-	mlx_loop_hook(game.session.id, &ft_move_player, &game);
-	mlx_loop(game.session.id);
+	mlx_hook(game->window.window, 17, 0, ft_clean_prog, game);
+	mlx_hook(game->window.window, 2, 0, ft_key_press, game);
+	mlx_hook(game->window.window, 3, 0, ft_key_release, game);
+	mlx_loop_hook(game->session.id, ft_move_player, game);
+	mlx_loop(game->session.id);
+	return (0);
 }
 
-int		ft_cub3d(int save, char *map_path)
+int			ft_cub3d(int save, char *map_path)
 {
 	t_game		game;
 	int			err;
 
 	init_session_images_and_ptrs(&game);
 	if (check_map_extension(map_path) == -1)
-		return (ft_error(-7, &game)); // a verifier
-	if ((err = init_window(&game, map_path, "Cube3d")) < 0)		
+		return (ft_error(-7, &game));
+	if ((err = init_window(&game, map_path, "Cube3d")) < 0)
 		return (ft_error(err, &game));
 	if ((err = init_session(&game)) < 0)
 		return (ft_error(err, &game));
@@ -78,25 +78,17 @@ int		ft_cub3d(int save, char *map_path)
 									game.window.y_w)))
 		return (ft_error(-2, &game));
 	if (save)
-		return (save_image("start_image.bmp", game)); // erreur a gerer ?
+		return (save_image("start_image.bmp", game));
 	if (!(game.window.window = mlx_new_window(game.session.id, game.window.x_w,
 					game.window.y_w, game.window.title)))
 		return (ft_error(-4, &game));
 	if ((err = ft_display_image(&game, game.window, game.player, save)) < 0)
 		return (ft_error(err, &game));
-	launch_loop(game);
+	return (launch_loop(&game));
 	return (0);
 }
 
-
-int main()
-{
-	ft_cub3d(0, "map/map2.cub");
-
-}
-
-/*
-int		main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	if (argc < 2 || argc > 3)
 		return (ft_main_error());
@@ -111,4 +103,3 @@ int		main(int argc, char **argv)
 	}
 	return (0);
 }
-*/

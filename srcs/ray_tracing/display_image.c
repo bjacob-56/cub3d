@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:21:16 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:08:54 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:35:50 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	vertical_line_to_image(t_game game, t_ray ray)
 	t_image			t_img_src;
 	t_pixel_info	pix;
 
-//	pix.line_height = (int)(LINE_HEIGHT_STD / ray.dist_wall); // LINE_HEIGHT ou t_win.x_w ??
-	pix.line_height = (int)((double)game.window.y_w * HEIGHT_FACTOR / ray.dist_wall); // LINE_HEIGHT ou t_win.x_w ??
+	pix.line_height = (int)((double)game.window.y_w * HEIGHT_FACTOR
+						/ ray.dist_wall);
 	t_img_src = get_correct_wall(game.session, ray);
 	pix.x_img = get_x_texture_coord(game.player, ray, t_img_src);
 	pix.x_coord = ray.x;
@@ -65,8 +65,8 @@ void	ft_put_line_to_image(t_window t_win, t_image t_img_src,
 		pix->y_img = (int)(i * y_step + y_off);
 		color = t_img_src.p_color[pix->x_img +
 				t_img_src.line_bytes * pix->y_img / 4];
-		 t_img_new.p_color[pix->x_coord +
-		 	t_img_new.line_bytes * pix->y_coord / 4] = color;
+		t_img_new.p_color[pix->x_coord +
+			t_img_new.line_bytes * pix->y_coord / 4] = color;
 		i++;
 		pix->y_coord++;
 	}

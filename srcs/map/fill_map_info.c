@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:03 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 15:54:03 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:32:56 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_map_info(t_map_info *map_info)
 	map_info->c_colors[0] = -1;
 }
 
-int	get_images_path(t_game *g, char *line)
+int		get_images_path(t_game *g, char *line)
 {
 	int res;
 
@@ -44,7 +44,7 @@ int	get_images_path(t_game *g, char *line)
 	return (res);
 }
 
-int	get_floor_ceiling_color(t_game *g, char *line)
+int		get_floor_ceiling_color(t_game *g, char *line)
 {
 	if (!ft_strncmp(line, "F ", 2))
 		return (get_map_floor(&g->window.map_info, line + 2));

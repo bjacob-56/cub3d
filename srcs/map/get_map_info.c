@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:58 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 16:01:29 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:39:09 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 int	get_map_resolution(t_game *g, char *line_bis)
 {
-//	if (ft_strncmp(line_bis, "R ", 2))
-//		return (0);
 	if (g->window.map_info.resolution_x != -1)
 		return (-12);
 	line_bis = line_bis + 2;
 	while (*line_bis == ' ')
 		line_bis++;
 	g->window.map_info.resolution_x = 0;
-	while (ft_isdigit(*line_bis) && g->window.map_info.resolution_x <= X_RES_SCREEN)
+	while (ft_isdigit(*line_bis) && g->window.map_info.resolution_x <= X_RES)
 		g->window.map_info.resolution_x = 10 * g->window.map_info.resolution_x
 		+ (*(line_bis++) - '0');
 	while (ft_isdigit(*line_bis))
@@ -30,7 +28,7 @@ int	get_map_resolution(t_game *g, char *line_bis)
 	while (*line_bis == ' ')
 		line_bis++;
 	g->window.map_info.resolution_y = 0;
-	while (ft_isdigit(*line_bis) && g->window.map_info.resolution_y <= Y_RES_SCREEN)
+	while (ft_isdigit(*line_bis) && g->window.map_info.resolution_y <= Y_RES)
 		g->window.map_info.resolution_y = 10 * g->window.map_info.resolution_y
 		+ (*(line_bis++) - '0');
 	while (ft_isdigit(*line_bis))
@@ -46,10 +44,10 @@ int	get_map_floor(t_map_info *map_info, char *line_bis)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (map_info->f_colors[0] != -1)
 		return (-12);
-	while (i < 3)
+	while (++i < 3)
 	{
 		while (*line_bis == ' ')
 			line_bis++;
@@ -63,7 +61,6 @@ int	get_map_floor(t_map_info *map_info, char *line_bis)
 			+ (*(line_bis++) - '0');
 		if (map_info->f_colors[i] > 255)
 			return (-12);
-		i++;
 	}
 	while (*line_bis == ' ')
 		line_bis++;
@@ -76,10 +73,10 @@ int	get_map_ceiling(t_map_info *map_info, char *line_bis)
 {
 	int i;
 
-	i = 0;
+	i = -1;
 	if (map_info->c_colors[0] != -1)
 		return (-12);
-	while (i < 3)
+	while (++i < 3)
 	{
 		while (*line_bis == ' ')
 			line_bis++;
@@ -93,7 +90,6 @@ int	get_map_ceiling(t_map_info *map_info, char *line_bis)
 			+ (*(line_bis++) - '0');
 		if (map_info->c_colors[i] > 255)
 			return (-12);
-		i++;
 	}
 	while (*line_bis == ' ')
 		line_bis++;
@@ -123,7 +119,7 @@ int	get_nb_lines_columns_sprites(t_window *t_win, int fd,
 		if (t_win->map_info.nb_lines > 0 || ft_strlen(*line) > 0)
 			t_win->map_info.nb_lines++;
 		if (!size)
-			break;
+			break ;
 		free_line(line, -1);
 		size = get_next_line(fd, line);
 	}

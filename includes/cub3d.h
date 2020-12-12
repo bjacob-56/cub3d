@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 16:36:05 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:54:21 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 
 # include "../minilibx_mms_20200219/mlx.h"
 
-# define HEIGHT_FACTOR 1.3 // a ajuster ?
+# define HEIGHT_FACTOR 1.3
 
-# define FOV 0.66 // a verifier
+# define FOV 0.66
 # define W 13
 # define A 0
 # define S 1
@@ -40,8 +40,8 @@
 # define THETA 0.07
 # define ONE_STEP 0.2
 
-# define X_RES_SCREEN 2560
-# define Y_RES_SCREEN 1440
+# define X_RES 2560
+# define Y_RES 1440
 
 typedef struct	s_move
 {
@@ -59,7 +59,7 @@ typedef struct	s_sprite
 	double	y;
 }				t_sprite;
 
-typedef struct s_sprite_info
+typedef struct	s_sprite_info
 {
 	int		draw_startx;
 	int		draw_endx;
@@ -74,7 +74,6 @@ typedef struct s_sprite_info
 	double	inv_d;
 	int		screen_x;
 }				t_sprite_info;
-
 
 typedef struct	s_image
 {
@@ -104,21 +103,21 @@ typedef struct	s_start
 
 typedef struct	s_map_info
 {
-	int		resolution_x;
-	int		resolution_y;
-	char	*path_no;
-	char	*path_so;
-	char	*path_ea;
-	char	*path_we;
-	char	*path_sprite;
-	int		f_colors[3];
-	int		c_colors[3];
-	int		nb_lines;
-	int		nb_columns;
-	int		nb_sprites;
+	int			resolution_x;
+	int			resolution_y;
+	char		*path_no;
+	char		*path_so;
+	char		*path_ea;
+	char		*path_we;
+	char		*path_sprite;
+	int			f_colors[3];
+	int			c_colors[3];
+	int			nb_lines;
+	int			nb_columns;
+	int			nb_sprites;
 	t_sprite	*sprites;
-	t_start	start;
-	int		is_valid;
+	t_start		start;
+	int			is_valid;
 }				t_map_info;
 
 typedef struct	s_session
@@ -177,7 +176,7 @@ typedef struct	s_pixel_info
 	int	line_height;
 }				t_pixel_info;
 
-typedef struct s_game
+typedef struct	s_game
 {
 	t_session	session;
 	t_window	window;
@@ -193,34 +192,35 @@ typedef struct s_game
 /*
 ** ft_cub3d.c
 */
-int		ft_display_image(t_game *g, t_window t_win, t_player player, int save);
+int				ft_display_image(t_game *g, t_window t_win, t_player player,
+								int save);
 
 /*
 ** ft_init.c
 */
-void	init_session_images_and_ptrs(t_game *game);
-int			init_session(t_game *game);
-int			init_window(t_game *game, char *map_file_path, char *title);
-t_player	init_player(t_window t_win);
-t_image		open_image(void *mlx_ptr, char *img_path,
-			int width, int height);
+void			init_session_images_and_ptrs(t_game *game);
+int				init_session(t_game *game);
+int				init_window(t_game *game, char *map_file_path, char *title);
+t_player		init_player(t_window t_win);
+t_image			open_image(void *mlx_ptr, char *img_path,
+							int width, int height);
 
 /*
 ** clear_objects.c
 */
-void	*malloc_lst(t_game *game, int size);
-int		malloc_trim_lst(t_game *game, char *s1, char c);
-int		free_all_ptr(t_game *game);
-int		free_line(char **line, int err);
-void		clear_session_images(t_game *game);
+void			*malloc_lst(t_game *game, int size);
+int				malloc_trim_lst(t_game *game, char *s1, char c);
+int				free_all_ptr(t_game *game);
+int				free_line(char **line, int err);
+void			clear_session_images(t_game *game);
 
 /*
 ** errors.c
 */
-int		ft_error(int err, t_game *game);
-int			ft_main_error(void);
-int	free_error_int(char *ptr, int err);
-int			ft_close_file(int fd, int err);
+int				ft_error(int err, t_game *game);
+int				ft_main_error(void);
+int				free_error_int(char *ptr, int err);
+int				ft_close_file(int fd, int err);
 
 /*
 ** -----------------------------     MAP     ----------------------------- **
@@ -229,83 +229,85 @@ int			ft_close_file(int fd, int err);
 /*
 ** ft_get_map_info.c
 */
-int	get_map_resolution(t_game *g, char *line_bis);
-int			get_map_floor(t_map_info *map_info, char *line_bis);
-int			get_map_ceiling(t_map_info *map_info, char *line_bis);
-int			get_nb_lines_columns_sprites(t_window *t_win, int fd,
-			int size, char **line);
-int			ft_reopen(int fd, char *map_file_path);
+int				get_map_resolution(t_game *g, char *line_bis);
+int				get_map_floor(t_map_info *map_info, char *line_bis);
+int				get_map_ceiling(t_map_info *map_info, char *line_bis);
+int				get_nb_lines_columns_sprites(t_window *t_win, int fd,
+											int size, char **line);
+int				ft_reopen(int fd, char *map_file_path);
 
 /*
 ** ft_fill_map_info.c
 */
-void		init_map_info(t_map_info *map_info);
-int	get_images_path(t_game *g, char *line);
-int	get_floor_ceiling_color(t_game *g, char *line);
-int		fill_map_info(char *line, t_game *g);
-int		set_data_map_info(int fd, t_game *g, int nb_read,
-						int nb_param);
+void			init_map_info(t_map_info *map_info);
+int				get_images_path(t_game *g, char *line);
+int				get_floor_ceiling_color(t_game *g, char *line);
+int				fill_map_info(char *line, t_game *g);
+int				set_data_map_info(int fd, t_game *g, int nb_read,
+								int nb_param);
 
 /*
 ** ft_parse_map.c
 */
-int			**ft_malloc_tab_2d(t_game *game);
-int			check_and_fill_cell_i_j(t_window *t_win, char *line, int i, int j);
-int			fill_tab_map(t_game *g, int fd, int i, char **line);
-int			parse_map(t_game *game, char *map_file_path,
-			int fd, int nb_read);
-void		set_start_map(t_window *t_win, int i, int j, char *line);
+int				**ft_malloc_tab_2d(t_game *game);
+int				check_and_fill_cell_i_j(t_window *t_win, char *line,
+										int i, int j);
+int				fill_tab_map(t_game *g, int fd, int i, char **line);
+int				parse_map(t_game *game, char *map_file_path,
+							int fd, int nb_read);
+void			set_start_map(t_window *t_win, int i, int j, char *line);
 
 /*
 ** ft_check_map.c
 */
-int		**copy_map_to_map_bis(t_game *game, t_window t_win);
-void		check_next_point(t_window *t_win, int **map_bis, int i, int j);
-int		check_map_with_propagation(t_game *game, t_window *t_win);
-int		go_to_nb_read(int fd, char **line, int nb_read);
-int		check_map_extension(char *map_path);
+int				**copy_map_to_map_bis(t_game *game, t_window t_win);
+void			check_next_point(t_window *t_win, int **map_bis, int i, int j);
+int				check_map_with_propagation(t_game *game, t_window *t_win);
+int				go_to_nb_read(int fd, char **line, int nb_read);
+int				check_map_extension(char *map_path);
 
 /*
-** -----------------------------     RAY TRACING     ----------------------------- **
+** --------------------------     RAY TRACING     -------------------------- **
 */
 
 /*
 ** ft_ray_projection.c
 */
-void		set_ray_dir_and_delta(t_window t_win,
-			t_player player, t_ray *ray);
-void		get_step_and_side_dist(t_player player, t_ray *ray);
-int			find_closest_wall(t_window t_win, t_player player,
-			t_vector *p_square, t_ray *ray);
-double		get_dist_wall(t_player player, t_ray ray, t_vector p_square);
-int			get_x_texture_coord(t_player player, t_ray ray, t_image t_img);
+void			set_ray_dir_and_delta(t_window t_win, t_player player,
+									t_ray *ray);
+void			get_step_and_side_dist(t_player player, t_ray *ray);
+int				find_closest_wall(t_window t_win, t_player player,
+									t_vector *p_square, t_ray *ray);
+double			get_dist_wall(t_player player, t_ray ray, t_vector p_square);
+int				get_x_texture_coord(t_player player, t_ray ray, t_image t_img);
 
 /*
 ** ft_display_image.c
 */
-t_image		get_correct_wall(t_session t_ses, t_ray ray);
-void		vertical_line_to_image(t_game game, t_ray ray);
-void		ft_put_line_to_image(t_window t_win,
-			t_image t_img_src, t_pixel_info *pix, t_image t_img_new);
-void		ft_put_ceiling_to_image(t_window t_win, t_pixel_info *pix,
+t_image			get_correct_wall(t_session t_ses, t_ray ray);
+void			vertical_line_to_image(t_game game, t_ray ray);
+void			ft_put_line_to_image(t_window t_win, t_image t_img_src,
+									t_pixel_info *pix, t_image t_img_new);
+void			ft_put_ceiling_to_image(t_window t_win, t_pixel_info *pix,
+										t_image t_img_new);
+void			ft_put_floor_to_image(t_window t_win, t_pixel_info *pix,
 									t_image t_img_new);
-void		ft_put_floor_to_image(t_window t_win, t_pixel_info *pix,
-								t_image t_img_new);
 
 /*
 ** sprites_utils.c
 */
 void			sort_sprites(t_sprite *tab, int nb_sprites, t_player p);
 t_sprite_info	get_sprite_info(t_window t_win, t_player player, int i);
-int				get_sprite_color(t_image t_img_s, t_sprite_info s_info, int j, int d);
+int				get_sprite_color(t_image t_img_s, t_sprite_info s_info,
+								int j, int d);
 
 /*
 ** sprites_display.c
 */
 t_image			ft_display_stripes(t_session t_ses, t_window t_win,
-				t_player player, t_image t_img);
+									t_player player, t_image t_img);
 void			ft_put_sprite_line_to_image(t_window t_win, t_image t_img,
-				t_image t_img_s, t_sprite_info s_info);
+										t_image t_img_s, t_sprite_info s_info);
 
 /*
 ** -----------------------------     EVENTS     ----------------------------- **
@@ -314,26 +316,25 @@ void			ft_put_sprite_line_to_image(t_window t_win, t_image t_img,
 /*
 ** event_handler.c
 */
-int		ft_key_press(int key, t_game *game);
-int		ft_key_release(int key, t_game *game);
-int		ft_move_player(t_game *game);
-int		ft_clean_prog(t_game *game);
-
+int				ft_key_press(int key, t_game *game);
+int				ft_key_release(int key, t_game *game);
+int				ft_move_player(t_game *game);
+int				ft_clean_prog(t_game *game, int state);
 /*
 ** move.c
 */
-int	move_player_straight(t_game *game, int signe);
-int	move_player_side(t_game *game, int signe);
-int	turn_player(t_game *game, int signe);
+int				move_player_straight(t_game *game, int signe);
+int				move_player_side(t_game *game, int signe);
+int				turn_player(t_game *game, int signe);
 
 /*
-** -----------------------------     SAVE IMAGE     ----------------------------- **
+** --------------------------     SAVE IMAGE     -------------------------- **
 */
 
 /*
 ** save_image.c
 */
-int	save_image(char *path, t_game game);
+int				save_image(char *path, t_game game);
 
 /*
 ** -----------------------------     MATHS     ----------------------------- **
@@ -342,14 +343,7 @@ int	save_image(char *path, t_game game);
 /*
 ** ft_maths.c
 */
-int			ft_max(int a, int b);
-int			ft_min(int a, int b);
-
-
-/////////////////////////////////////
-void	print_map(t_window t_win, int **map);
-void	print_map_info(t_map_info map_info);
-void	print_player_info(t_player player);
-/////////////////////////////////////
+int				ft_max(int a, int b);
+int				ft_min(int a, int b);
 
 #endif

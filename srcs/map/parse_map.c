@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:29:50 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 16:09:00 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:47:51 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		**ft_malloc_tab_2d(t_game *game)
 	{
 		if (!(map[i] = malloc_lst(game, sizeof(int) *
 						game->window.map_info.nb_columns)))
-			return (NULL); // gestion ici du free_all_lines_and_map ?
+			return (NULL);
 		i++;
 	}
 	return (map);
@@ -111,16 +111,14 @@ int		parse_map(t_game *g, char *map_file_path, int fd, int nb_read)
 	int		err;
 
 	line = NULL;
-	size = get_next_line(fd, &line);
-	while (size > 0 && !line[0]) // >0 || >= 0 ?
+	while ((size = get_next_line(fd, &line)) > 0 && !line[0])
 	{
 		free_line(&line, -1);
-		size = get_next_line(fd, &line);
 		nb_read++;
 	}
-	if (size < 0 ||	(size = get_nb_lines_columns_sprites(&g->window, fd, size,
-		&line))	== -1 || (fd = ft_reopen(fd, map_file_path)) == -1)
-			return (free_line(&line, -6));
+	if (size < 0 || ((size = get_nb_lines_columns_sprites(&g->window, fd, size,
+		&line)) == -1) || ((fd = ft_reopen(fd, map_file_path)) == -1))
+		return (free_line(&line, -6));
 	if (!g->window.map_info.nb_lines)
 		return (ft_close_file(fd, -1));
 	if (!(g->window.map = ft_malloc_tab_2d(g)))

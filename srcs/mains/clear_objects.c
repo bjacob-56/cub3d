@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 08:40:20 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 16:36:07 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:29:19 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int		malloc_trim_lst(t_game *game, char *s1, char c)
 	t_list	*elem;
 
 	if ((c == 'N' && game->window.map_info.path_no) ||
-		 (c == 'S' && game->window.map_info.path_so) ||
-		 (c == 'E' && game->window.map_info.path_ea) ||
-		 (c == 'W' && game->window.map_info.path_we) ||
-		 (c == 's' && game->window.map_info.path_sprite))
-		 return (-12);
+		(c == 'S' && game->window.map_info.path_so) ||
+		(c == 'E' && game->window.map_info.path_ea) ||
+		(c == 'W' && game->window.map_info.path_we) ||
+		(c == 's' && game->window.map_info.path_sprite))
+		return (-12);
 	if (!(ptr = ft_strtrim(s1, " ")))
 		return (-8);
 	if (!(elem = ft_lstnew(ptr)))
@@ -74,16 +74,21 @@ int		free_line(char **line, int err)
 	return (err);
 }
 
-void		clear_session_images(t_game *game)
+void	clear_session_images(t_game *game)
 {
 	if (game->session.images.no.image)
-		mlx_destroy_image (game->session.id, game->session.images.no.image);
+		mlx_destroy_image(game->session.id, game->session.images.no.image);
 	if (game->session.images.so.image)
-		mlx_destroy_image (game->session.id, game->session.images.so.image);
+		mlx_destroy_image(game->session.id, game->session.images.so.image);
 	if (game->session.images.ea.image)
-		mlx_destroy_image (game->session.id, game->session.images.ea.image);
+		mlx_destroy_image(game->session.id, game->session.images.ea.image);
 	if (game->session.images.we.image)
-		mlx_destroy_image (game->session.id, game->session.images.we.image);
+		mlx_destroy_image(game->session.id, game->session.images.we.image);
 	if (game->session.images.sprite.image)
-		mlx_destroy_image (game->session.id, game->session.images.sprite.image);
+		mlx_destroy_image(game->session.id, game->session.images.sprite.image);
+	game->session.images.no.image = NULL;
+	game->session.images.so.image = NULL;
+	game->session.images.ea.image = NULL;
+	game->session.images.we.image = NULL;
+	game->session.images.sprite.image = NULL;
 }

@@ -6,17 +6,19 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:48:26 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:02:22 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 17:27:18 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int		ft_clean_prog(t_game *game) // a verifier
+int	ft_clean_prog(t_game *game, int state)
 {
-	dprintf(1, "Cub3d over\n");
 	free_all_ptr(game);
-	mlx_destroy_window(game->session.id, game->window.window);
+	if (game->window.window)
+		mlx_destroy_window(game->session.id, game->window.window);
+	if (state == 1)
+		write(1, "Cub3d over\n", 11);
 	exit(0);
 	return (0);
 }
@@ -36,11 +38,11 @@ int	ft_key_press(int key, t_game *game)
 	else if (key == D)
 		game->player.move.side_right = 1;
 	else if (key == ESC)
-		ft_clean_prog(game);
+		ft_clean_prog(game, 1);
 	return (0);
 }
 
-int		ft_key_release(int key, t_game *game)
+int	ft_key_release(int key, t_game *game)
 {
 	if (key == LEFT)
 		game->player.move.turn_left = 0;
@@ -57,7 +59,7 @@ int		ft_key_release(int key, t_game *game)
 	return (0);
 }
 
-int		ft_move_player(t_game *game)
+int	ft_move_player(t_game *game)
 {
 	if (game->player.move.turn_left == 1)
 		turn_player(game, 1);
