@@ -6,127 +6,85 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 17:21:50 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 19:05:41 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 09:50:33 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	put_int_to_buffer(char *buffer, int size, int *index)
+void	write_int(int fd, int i, int size)
 {
-	buffer[(*index)++] = size >> 0;
-	buffer[(*index)++] = size >> 8;
-	buffer[(*index)++] = size >> 16;
-	buffer[(*index)++] = size >> 24;
+	write(fd, &i, size);
 }
 
-void	fill_file_header(char *buffer, int *index, t_game game)
+void	fill_file_header(int fd, t_game game)
 {
 	int	file_size;
 
-	file_size = game.img.line_bytes * game.window.y_w;
-//	file_size = game.window.x_w * game.window.y_w * 4;
-	buffer[(*index)++] = 'B';
-	buffer[(*index)++] = 'M';
-	put_int_to_buffer(buffer, file_size, index);
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 54;
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 0;
+	file_size = game.window.x_w * game.window.y_w * 4 + 54;
+	write(fd, "BM", 2);
+	write(fd, &file_size, 4);
+	write_int(fd, 0, 4);
+	write_int(fd, 54, 4);
 }
 
-void	fill_file_info(char *buffer, int *index, t_game game)
+void	fill_file_info(int fd, t_game game)
 {
 	int	img_width;
 	int	img_height;
-	int	i;	
+	int	bpp;
 
 	img_width = game.window.x_w;
 	img_height = game.window.y_w;
-	dprintf(1, "--> %d\n", img_height);
-	buffer[(*index)++] = 40;
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 0;
-	put_int_to_buffer(buffer, img_width, index);
-	put_int_to_buffer(buffer, img_height, index);
-	buffer[(*index)++] = 1;
-	buffer[(*index)++] = 0;
-	buffer[(*index)++] = 24;
-	buffer[(*index)++] = 0;
-	i = -1;
-	while (++i < 24)
-		buffer[(*index)++] = 0;
-/*
-	40,0,0,0
-	img w
-	img y
-	1,0
-	24,0
-	null (24o)
-	*/
+	bpp = game.img.bpp;
+	write_int(fd, 40, 4);
+	write(fd, &img_width, 4);
+	write(fd, &img_height, 4);
+	write_int(fd, 1, 2);
+	write(fd, &bpp, 2);
+	write_int(fd, 0, 4);
+	write_int(fd, 0, 4);
+	write_int(fd, 0, 4);
+	write_int(fd, 0, 4);
+	write_int(fd, 0, 4);
+	write_int(fd, 0, 4);
 }
 
-char *get_tab_colors(t_game game)
+void	fill_file_body(int fd, t_game game)
 {
-	char	*tab_bmp;
-	int		p;
-	int		e;
-	int		l;
+	int	x;
+	int	y;
+	int color;
 
-	tab_bmp = (char*)mlx_get_data_addr(game.img.image, &p, &l, &e);
-	return (tab_bmp);
-}
-
-int	save_image(char *path, t_game game, int len)
-{
-	int fd;
-	char	buffer[54 + len * 4];
-//	char	buffer[54];
-	int	index;
-	int *tab_bmp;
-	int x;
-	int y;
-	int j;
-	
-	index = 0;
-	fill_file_header(buffer, &index, game);
-	fill_file_info(buffer, &index, game);
-
-	tab_bmp = game.img.p_color;
-//	tab_bmp = get_tab_colors(game);
-dprintf(1, "index avec boucle = %d\n", index);
-//	y = game.window.y_w - 1;
-//	while (y >= 0)
-	y = 0;
-	while (y < game.window.y_w)
+	y = game.window.y_w - 1;
+	while (y >= 0)
 	{
 		x = 0;
 		while (x < game.window.x_w)
 		{
-			buffer[index++] = tab_bmp[x + y * game.window.x_w] >> 0;
-			buffer[index++] = tab_bmp[x + y * game.window.x_w] >> 8;
-			buffer[index++] = tab_bmp[x + y * game.window.x_w] >> 16;
+			color = game.img.p_color[x + y * game.img.line_bytes / 4];
+			write(fd, &color, 4);
 			x++;
 		}
-		j = 0;
-		while (((x * 3 + j++) % 4 != 0))
-			buffer[index++] = 0;
-//		y--;
-		y++;
+		y--;
 	}
+}
 
-	fd = open(path, O_CREAT | O_TRUNC | O_WRONLY);
+int		save_image(char *name, t_game game, int len)
+{
+	int		fd;
+	char	*path;
+
+	if (!(path = ft_strjoin("./saved_image/", name)))
+		return (-1);
+//	path = name;
+//	dprintf(1, "... %s\n", path);
+	fd = open(path, O_CREAT | O_TRUNC | O_RDWR, 0777);
 	if (fd == -1)
 		return (-1);
-//	write(fd, buffer, 54);
-//	write(fd, buffer, 54);
-//	write(fd, tab_bmp, len );
-dprintf(1, "index = %d\nlen = %d\n", index, len);
-	write(fd, buffer, index);
+	fill_file_header(fd, game);
+	fill_file_info(fd, game);
+	fill_file_body(fd, game);
+	free(path);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 18:07:53 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 10:00:13 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	ft_display_image(t_game *g, t_session t_ses,
 {
 	t_ray		ray;
 	t_vector	p_square;
-	int			p;
+//	int			p;
 	int			e;
 
 	mlx_destroy_image(g->session.id, g->img.image);
 	if (!(g->img.image = mlx_new_image(t_ses.id, t_win.x_w, t_win.y_w)))
 		return (-1);
-	g->img.p_color = (int*)mlx_get_data_addr(g->img.image, &p,
-					&g->img.line_bytes, &e);
+	g->img.p_color = (int*)mlx_get_data_addr(g->img.image, &g->img.bpp,
+					&g->img.line_bytes, &e);	
 	ray.x = 0;
 	while (ray.x < t_win.x_w)
 	{
@@ -50,18 +50,16 @@ int	ft_display_image(t_game *g, t_session t_ses,
 	return (1);
 }
 
-int		main()
+int		ft_cub3d(int save, char *map_path)
 {
 	t_game		game;
-	void		*param;
-//	t_image		t_img;
 //	double		time;
 //	double		oldTime;
 
 	game.session = init_session();
-	if (init_window(&game, "map/map2.cub", "Fenetre_1") == -1)
+	if (init_window(&game, map_path, "Fenetre_1") == -1)
 	{
-		dprintf(1, "Error init\n");
+		dprintf(1, "Error init\n"); // a corriger
 		return (free_all_ptr(&game));
 	}
 	game.player = init_player(game.window);
@@ -74,26 +72,43 @@ int		main()
 	if (ft_display_image(&game, game.session, game.window, game.player) == -1)
 		return (free_all_ptr(&game));
 
-	//  char *tab_bmp;
-	//  int	e;
-	//  int p;
-	//  tab_bmp = (char*)mlx_get_data_addr(game.img.image, &p,
-	//  				&game.img.line_bytes, &e);
-//	save_image("./saved_image/image_test", (char*)game.img.p_color, game.img.line_bytes * game.window.y_w);
-//	save_image("./saved_image/image_test", tab_bmp, game.img.line_bytes * game.window.y_w);
-//	save_image("./saved_image/image_test.bmp", game, game.img.line_bytes * game.window.y_w);
-dprintf(1, "i_x = %d, i_y = %d\n", game.window.x_w, game.window.y_w);
-	save_image("./saved_image/image_test.bmp", game, game.window.x_w * game.window.y_w);
+	save_image("start_image.bmp", game, game.window.x_w * game.window.y_w);
 
 
-//	tab_bmp = (char*)game.img.p_color;
-//int i = -1;
-//while (++i < 100)
+	mlx_hook(game.window.window, 17, 0, ft_clean_prog, &game);
+	mlx_hook(game.window.window, 2, 0, &ft_key_press, &game);
+	mlx_hook(game.window.window, 3, 0, &ft_key_release, &game);
+	mlx_loop_hook(game.session.id, &ft_move_player, &game);
+	mlx_loop(game.session.id);
+	return (0);	
 
-dprintf(1, "x_w = %d\n", game.window.x_w);
-dprintf(1, "y_w = %d\n", game.window.y_w);
- dprintf(1, "line_bytes = %d\n", game.img.line_bytes);
-	// dprintf(1, "saved image = %d\n", save_image("./saved_image/image_test", tab_bmp));
+}
+
+int		main(int argc, char **argv)
+{
+	t_game		game;
+//	void		*param;
+//	double		time;
+//	double		oldTime;
+
+	game.session = init_session();
+	if (init_window(&game, "map/map2.cub", "Fenetre_1") == -1)
+	{
+		dprintf(1, "Error init\n"); // a corriger
+		return (free_all_ptr(&game));
+	}
+	game.player = init_player(game.window);
+	if (!(game.window.window = mlx_new_window(game.session.id, game.window.x_w,
+					game.window.y_w, game.window.title)))
+		return (free_all_ptr(&game));
+	if (!(game.img.image = mlx_new_image(game.session.id, game.window.x_w,
+									game.window.y_w)))
+		return (free_all_ptr(&game));
+	if (ft_display_image(&game, game.session, game.window, game.player) == -1)
+		return (free_all_ptr(&game));
+
+	save_image("start_image.bmp", game, game.window.x_w * game.window.y_w);
+
 
 	mlx_hook(game.window.window, 17, 0, ft_clean_prog, &game);
 	mlx_hook(game.window.window, 2, 0, &ft_key_press, &game);

@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 17:05:46 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 09:28:52 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct	s_image
 	int		y_i;
 	int		line_bytes;
 	int		*p_color;
+	int		bpp;
 }				t_image;
 
 typedef struct	s_img_poles
