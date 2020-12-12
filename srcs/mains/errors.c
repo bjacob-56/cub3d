@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 12:12:24 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 15:14:55 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 16:07:22 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,10 @@ int			ft_main_error(void)
 	write(1, "Error\n", 6);
 	write(1, "Wrong inputs\n", 13);
 	return (-1);
+}
+
+int			ft_close_file(int fd, int err)
+{
+	close(fd);
+	return (err);
 }

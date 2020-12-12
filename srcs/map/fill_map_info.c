@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:03 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:52:35 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 15:54:03 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int		fill_map_info(char *line, t_game *g)
 	res = -1;
 	if (!line[0])
 		return (0);
-	res += get_map_resolution(g, line);
+	if (!ft_strncmp(line, "R ", 2))
+		res += get_map_resolution(g, line);
 	res += get_images_path(g, line);
 	res += get_floor_ceiling_color(g, line);
 	return (res);

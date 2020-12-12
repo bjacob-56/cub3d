@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 15:02:15 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 16:15:08 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,12 @@ int		ft_cub3d(int save, char *map_path)
 	t_game		game;
 	int			err;
 
-	game.ptrs = NULL;
+	init_session_images_and_ptrs(&game);
 	if (check_map_extension(map_path) == -1)
 		return (ft_error(-7, &game)); // a verifier
-	game.session = init_session();
 	if ((err = init_window(&game, map_path, "Cube3d")) < 0)		
+		return (ft_error(err, &game));
+	if ((err = init_session(&game)) < 0)
 		return (ft_error(err, &game));
 	game.player = init_player(game.window);
 	if (!(game.img.image = mlx_new_image(game.session.id, game.window.x_w,
@@ -95,8 +96,8 @@ int		main(int argc, char **argv)
 		ft_cub3d(0, argv[1]);
 	else
 	{
-		if (!ft_strncmp("--save", argv[1], 7))
-			ft_cub3d(1, argv[2]);
+		if (!ft_strncmp("--save", argv[2], 7))
+			ft_cub3d(1, argv[1]);
 		else
 			return (ft_main_error()); // erreur a gerer
 	}

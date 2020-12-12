@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:29:50 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 15:14:35 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 16:09:00 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		parse_map(t_game *g, char *map_file_path, int fd, int nb_read)
 
 	line = NULL;
 	size = get_next_line(fd, &line);
-	while (size >= 0 && !line[0])
+	while (size > 0 && !line[0]) // >0 || >= 0 ?
 	{
 		free_line(&line, -1);
 		size = get_next_line(fd, &line);
@@ -121,6 +121,8 @@ int		parse_map(t_game *g, char *map_file_path, int fd, int nb_read)
 	if (size < 0 ||	(size = get_nb_lines_columns_sprites(&g->window, fd, size,
 		&line))	== -1 || (fd = ft_reopen(fd, map_file_path)) == -1)
 			return (free_line(&line, -6));
+	if (!g->window.map_info.nb_lines)
+		return (ft_close_file(fd, -1));
 	if (!(g->window.map = ft_malloc_tab_2d(g)))
 		return (-8);
 	if (go_to_nb_read(fd, &line, nb_read) == -1)

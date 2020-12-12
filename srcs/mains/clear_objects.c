@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 08:40:20 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:51:29 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 15:39:48 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int		malloc_trim_lst(t_game *game, char *s1, char c)
 int		free_all_ptr(t_game *game)
 {
 	ft_lstclear(&game->ptrs, free);
+	clear_session_images(game);
 	return (0);
 }
 
@@ -77,4 +78,18 @@ int		free_line(char **line, int err)
 		*line = NULL;
 	}
 	return (err);
+}
+
+void		clear_session_images(t_game *game)
+{
+	if (game->session.images.no.image)
+		mlx_destroy_image (game->session.id, game->session.images.no.image);
+	if (game->session.images.so.image)
+		mlx_destroy_image (game->session.id, game->session.images.so.image);
+	if (game->session.images.ea.image)
+		mlx_destroy_image (game->session.id, game->session.images.ea.image);
+	if (game->session.images.we.image)
+		mlx_destroy_image (game->session.id, game->session.images.we.image);
+	if (game->session.images.sprite.image)
+		mlx_destroy_image (game->session.id, game->session.images.sprite.image);
 }

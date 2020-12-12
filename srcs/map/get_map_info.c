@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:47:58 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:58:41 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 16:01:29 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,27 @@
 
 int	get_map_resolution(t_game *g, char *line_bis)
 {
-	if (ft_strncmp(line_bis, "R ", 2))
-		return (0);
+//	if (ft_strncmp(line_bis, "R ", 2))
+//		return (0);
 	if (g->window.map_info.resolution_x != -1)
 		return (-12);
 	line_bis = line_bis + 2;
 	while (*line_bis == ' ')
 		line_bis++;
 	g->window.map_info.resolution_x = 0;
-	while (ft_isdigit(*line_bis))
+	while (ft_isdigit(*line_bis) && g->window.map_info.resolution_x <= X_RES_SCREEN)
 		g->window.map_info.resolution_x = 10 * g->window.map_info.resolution_x
 		+ (*(line_bis++) - '0');
+	while (ft_isdigit(*line_bis))
+		line_bis++;
 	while (*line_bis == ' ')
 		line_bis++;
 	g->window.map_info.resolution_y = 0;
-	while (ft_isdigit(*line_bis))
+	while (ft_isdigit(*line_bis) && g->window.map_info.resolution_y <= Y_RES_SCREEN)
 		g->window.map_info.resolution_y = 10 * g->window.map_info.resolution_y
 		+ (*(line_bis++) - '0');
+	while (ft_isdigit(*line_bis))
+		line_bis++;
 	while (*line_bis == ' ')
 		line_bis++;
 	if (*line_bis)
@@ -116,7 +120,8 @@ int	get_nb_lines_columns_sprites(t_window *t_win, int fd,
 			if ((*line)[j++] == '2')
 				t_win->map_info.nb_sprites++;
 		t_win->map_info.nb_columns = c_max;
-		t_win->map_info.nb_lines++;
+		if (t_win->map_info.nb_lines > 0 || ft_strlen(*line) > 0)
+			t_win->map_info.nb_lines++;
 		if (!size)
 			break;
 		free_line(line, -1);

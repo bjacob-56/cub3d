@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:08:29 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 16:07:30 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,8 +198,8 @@ int		ft_display_image(t_game *g, t_window t_win, t_player player, int save);
 /*
 ** ft_init.c
 */
-t_session	init_session(void);
-t_window	window_null(void); // A UTILISER ?
+void	init_session_images_and_ptrs(t_game *game);
+int			init_session(t_game *game);
 int			init_window(t_game *game, char *map_file_path, char *title);
 t_player	init_player(t_window t_win);
 t_image		open_image(void *mlx_ptr, char *img_path,
@@ -212,12 +212,14 @@ void	*malloc_lst(t_game *game, int size);
 int		malloc_trim_lst(t_game *game, char *s1, char c);
 int		free_all_ptr(t_game *game);
 int		free_line(char **line, int err);
+void		clear_session_images(t_game *game);
 
 /*
 ** errors.c
 */
 int		ft_error(int err, t_game *game);
 int			ft_main_error(void);
+int			ft_close_file(int fd, int err);
 
 /*
 ** -----------------------------     MAP     ----------------------------- **

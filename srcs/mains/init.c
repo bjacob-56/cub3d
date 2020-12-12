@@ -6,35 +6,47 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 14:32:45 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/12 15:43:53 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-t_session	init_session(void)
+void	init_session_images_and_ptrs(t_game *game)
 {
-	t_session	session;
-
-	session.id = mlx_init();
-	session.images.no = open_image(session.id, "./images/mur_N.xpm", 0, 0);
-	session.images.so = open_image(session.id, "./images/mur_S.xpm", 0, 0);
-	session.images.ea = open_image(session.id, "./images/mur_E.xpm", 0, 0);
-	session.images.we = open_image(session.id, "./images/mur_W.xpm", 0, 0);
-	session.images.sprite = open_image(session.id,
-										"./images/column.xpm", 0, 0); // A CHANGER
-	return (session);
+	game->session.images.no.image = NULL;
+	game->session.images.so.image = NULL;
+	game->session.images.ea.image = NULL;
+	game->session.images.we.image = NULL;
+	game->session.images.sprite.image = NULL;
+	game->ptrs = NULL;
 }
 
-/*
-t_window	window_null(void) // A AJUSTER ?
+int	init_session(t_game *game)
 {
-	t_window t_win;
-
-	t_win.window = NULL;
-	return (t_win);
+	game->session.id = mlx_init();
+	game->session.images.no = open_image(game->session.id,
+									game->window.map_info.path_no, 0, 0);
+	if (!game->session.images.no.image)
+		return (-12);
+	game->session.images.so = open_image(game->session.id,
+									game->window.map_info.path_so, 0, 0);
+	if (!game->session.images.so.image)
+		return (-12);
+	game->session.images.ea = open_image(game->session.id,
+									game->window.map_info.path_ea, 0, 0);
+	if (!game->session.images.ea.image)
+		return (-12);
+	game->session.images.we = open_image(game->session.id,
+									game->window.map_info.path_we, 0, 0);
+	if (!game->session.images.we.image)
+		return (-12);
+	game->session.images.sprite = open_image(game->session.id,
+									game->window.map_info.path_sprite, 0, 0);
+	if (!game->session.images.sprite.image)
+		return (-12);
+	return (1);
 }
-*/
 
 int			init_window(t_game *g, char *map_file_path, char *title)
 {
@@ -105,8 +117,9 @@ t_image		open_image(void *mlx_ptr, char *img_path, int width, int height)
 		t_img.x_i = width;
 	if (!height)
 		t_img.y_i = height;
-	t_img.image = mlx_xpm_file_to_image(mlx_ptr, img_path,
-					&t_img.x_i, &t_img.y_i); // check si ca a marché ?	
+	if (!(t_img.image = mlx_xpm_file_to_image(mlx_ptr, img_path,
+					&t_img.x_i, &t_img.y_i)))
+		return (t_img);
 	img_c = (int*)mlx_get_data_addr(t_img.image, &p, &t_img.line_bytes, &e);
 	t_img.p_color = img_c;
 	return (t_img);
