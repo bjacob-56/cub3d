@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:23:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 17:31:48 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 11:31:32 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			ft_cub3d(int save, char *map_path)
 		return (ft_error(-4, &game));
 	if ((err = ft_display_image(&game, game.window, game.player, save)) < 0)
 		return (ft_error(err, &game));
-	return (launch_loop(&game));
+	launch_loop(&game);
 	return (0);
 }
 

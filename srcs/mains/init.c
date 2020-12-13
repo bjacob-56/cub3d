@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 11:20:42 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 17:38:06 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 12:41:54 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		init_session_images_and_ptrs(t_game *game)
 {
+	game->img.image = NULL;
 	game->session.images.no.image = NULL;
 	game->session.images.so.image = NULL;
 	game->session.images.ea.image = NULL;

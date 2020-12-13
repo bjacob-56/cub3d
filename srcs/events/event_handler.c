@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 15:48:26 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 17:27:18 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 12:42:38 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,22 @@ int	ft_key_release(int key, t_game *game)
 
 int	ft_move_player(t_game *game)
 {
+	int	change;
+
+	change = 0;
 	if (game->player.move.turn_left == 1)
-		turn_player(game, 1);
+		turn_player(game, 1, &change);
 	if (game->player.move.turn_right == 1)
-		turn_player(game, -1);
+		turn_player(game, -1, &change);
 	if (game->player.move.straight_pos == 1)
-		move_player_straight(game, 1);
+		move_player_straight(game, 1, &change);
 	if (game->player.move.straight_neg == 1)
-		move_player_straight(game, -1);
+		move_player_straight(game, -1, &change);
 	if (game->player.move.side_left == 1)
-		move_player_side(game, -1);
+		move_player_side(game, -1, &change);
 	if (game->player.move.side_right == 1)
-		move_player_side(game, 1);
-	if (ft_display_image(game, game->window,
+		move_player_side(game, 1, &change);
+	if (change && ft_display_image(game, game->window,
 		game->player, 0) < 0)
 		return (ft_error(-5, game));
 	return (0);

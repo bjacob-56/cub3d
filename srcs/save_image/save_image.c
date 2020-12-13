@@ -6,18 +6,18 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 17:21:50 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 13:24:20 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 12:43:57 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	write_int(int fd, int i, int size)
+static void	write_int(int fd, int i, int size)
 {
 	write(fd, &i, size);
 }
 
-void	fill_file_header(int fd, t_game game)
+static void	fill_file_header(int fd, t_game game)
 {
 	int	file_size;
 
@@ -28,7 +28,7 @@ void	fill_file_header(int fd, t_game game)
 	write_int(fd, 54, 4);
 }
 
-void	fill_file_info(int fd, t_game game)
+static void	fill_file_info(int fd, t_game game)
 {
 	int	img_width;
 	int	img_height;
@@ -50,7 +50,7 @@ void	fill_file_info(int fd, t_game game)
 	write_int(fd, 0, 4);
 }
 
-void	fill_file_body(int fd, t_game game)
+static void	fill_file_body(int fd, t_game game)
 {
 	int	x;
 	int	y;
@@ -70,7 +70,7 @@ void	fill_file_body(int fd, t_game game)
 	}
 }
 
-int		save_image(char *name, t_game game)
+int			save_image(char *name, t_game game)
 {
 	int		fd;
 	char	*path;

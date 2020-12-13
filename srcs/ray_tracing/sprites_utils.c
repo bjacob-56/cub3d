@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 12:47:33 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 17:43:49 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 12:41:25 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ t_sprite_info	get_sprite_info(t_window t_win, t_player player, int i)
 		s_info.transf_y = -0.2;
 	s_info.screen_x = (int)(t_win.x_w * (1 +
 						s_info.transf_x / s_info.transf_y));
-	s_info.height = abs((int)(t_win.y_w * s_info.inv_d / s_info.transf_y));
-	s_info.width = abs((int)(t_win.y_w * s_info.inv_d / s_info.transf_y));
+	s_info.height = abs((int)(t_win.y_w * 1 / s_info.transf_y));
+	s_info.width = abs((int)(t_win.y_w * 1 / s_info.transf_y));
 	s_info.draw_starty = ft_max((t_win.y_w - s_info.height) / 2, 0);
 	s_info.draw_endy = ft_min((t_win.y_w + s_info.height) / 2, t_win.y_w - 1);
 	s_info.draw_startx = (s_info.screen_x - s_info.width) / 2;

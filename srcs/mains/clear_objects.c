@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 08:40:20 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 17:29:19 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 10:42:12 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int		free_line(char **line, int err)
 
 void	clear_session_images(t_game *game)
 {
+	if (game->img.image)
+		mlx_destroy_image(game->session.id, game->img.image);
 	if (game->session.images.no.image)
 		mlx_destroy_image(game->session.id, game->session.images.no.image);
 	if (game->session.images.so.image)

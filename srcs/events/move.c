@@ -6,19 +6,20 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 14:22:15 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 15:48:57 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 10:28:57 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	move_player_straight(t_game *game, int signe)
+int	move_player_straight(t_game *game, int signe, int *change)
 {
 	double	pos_x;
 	double	pos_y;
 	double	p_square_x;
 	double	p_square_y;
 
+	*change = 1;
 	pos_x = game->player.pos_x;
 	pos_y = game->player.pos_y;
 	pos_x += signe * ONE_STEP * game->player.dir_x;
@@ -36,13 +37,14 @@ int	move_player_straight(t_game *game, int signe)
 	return (0);
 }
 
-int	move_player_side(t_game *game, int signe)
+int	move_player_side(t_game *game, int signe, int *change)
 {
 	double	pos_x;
 	double	pos_y;
 	double	p_square_x;
 	double	p_square_y;
 
+	*change = 1;
 	pos_x = game->player.pos_x;
 	pos_y = game->player.pos_y;
 	pos_x += signe * ONE_STEP * game->player.dir_y;
@@ -60,11 +62,12 @@ int	move_player_side(t_game *game, int signe)
 	return (0);
 }
 
-int	turn_player(t_game *game, int signe)
+int	turn_player(t_game *game, int signe, int *change)
 {
 	double	dir_x;
 	double	dir_y;
 
+	*change = 1;
 	dir_x = game->player.dir_x;
 	dir_y = game->player.dir_y;
 	game->player.dir_x = dir_x * cos(signe * THETA) -

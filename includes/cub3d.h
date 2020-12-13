@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 12:24:14 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/12 17:54:21 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 12:43:20 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # include "../minilibx_mms_20200219/mlx.h"
 
-# define HEIGHT_FACTOR 1.3
+# define HEIGHT_FACTOR 1
 
 # define FOV 0.66
 # define W 13
@@ -37,8 +37,8 @@
 # define RIGHT 124
 # define ESC 53
 
-# define THETA 0.07
-# define ONE_STEP 0.2
+# define THETA 0.05
+# define ONE_STEP 0.1
 
 # define X_RES 2560
 # define Y_RES 1440
@@ -323,9 +323,9 @@ int				ft_clean_prog(t_game *game, int state);
 /*
 ** move.c
 */
-int				move_player_straight(t_game *game, int signe);
-int				move_player_side(t_game *game, int signe);
-int				turn_player(t_game *game, int signe);
+int				move_player_straight(t_game *game, int signe, int *change);
+int				move_player_side(t_game *game, int signe, int *change);
+int				turn_player(t_game *game, int signe, int *change);
 
 /*
 ** --------------------------     SAVE IMAGE     -------------------------- **

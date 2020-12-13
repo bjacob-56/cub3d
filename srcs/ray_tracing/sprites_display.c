@@ -6,7 +6,7 @@
 /*   By: bjacob <bjacob@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 14:17:21 by bjacob            #+#    #+#             */
-/*   Updated: 2020/12/11 15:17:00 by bjacob           ###   ########lyon.fr   */
+/*   Updated: 2020/12/13 12:30:11 by bjacob           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_put_sprite_line_to_image(t_window t_win, t_image t_img,
 			{
 				d = (y - (t_win.y_w - s_info.height) / 2) * 256;
 				color = get_sprite_color(t_img_s, s_info, j, d);
-				if (color)
+				if (color != 0x980088)
 					t_img.p_color[j + t_img.line_bytes * y / 4] = color;
 			}
 		}
